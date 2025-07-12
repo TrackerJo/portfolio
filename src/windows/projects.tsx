@@ -28,17 +28,6 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
             ]
         },
         {
-            title: 'Campus Connect - High School Student Engagement Platform',
-            status: 'SaaS',
-            description: 'A web and mobile platform connecting high school students with extracurricular activities, ride sharing, and career opportunities.',
-            technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Maps API', 'React.ts'],
-            links: [
-                { label: 'product', href: 'https://campusconnects.net/' },
-                // { label: 'github', href: '#' },
-                // { label: 'docs', href: '#' }
-            ]
-        },
-        {
             title: 'Javaish - A Custom Programming Language',
             status: 'FEATURED',
             description: 'A hand made programming language that is a mix of popular programming languages and English. It is designed to help beginners learn to code, with a focus on simplicity and readability. Alongside a custom compiler, it includes a web-based IDE with syntax highlighting, code completion, and a custom line-by-line debugger.',
@@ -49,6 +38,28 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
                 { label: 'slideshow', href: 'https://docs.google.com/presentation/d/1cWa6pa6btzCKTbh4yDYVNZGC_aGPY99N2ixCo83qcX8/edit?usp=sharing' }
             ]
         },
+        {
+            title: 'ShiftMate – Employee Scheduling Made Simple',
+            status: 'SaaS',
+            description: 'ShiftMate simplifies employee scheduling with a real-time shift management system built using Flutter and Firebase. Supports manager-assigned shifts, employee availability tracking, and Google Calendar sync. Real-time updates and notifications ensure teams stay informed. Focused on intuitive UI and scalable backend architecture for teams of any size.',
+            technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Calendar API', 'Google OAuth'],
+            links: [
+                { label: 'product', href: 'https://trackerjo.github.io/ShiftMate/' },
+                // { label: 'docs', href: '#' }
+            ]
+        },
+        {
+            title: 'Campus Connect - High School Student Engagement Platform',
+            status: 'SaaS',
+            description: 'A web and mobile platform connecting high school students with extracurricular activities, ride sharing, and career opportunities.',
+            technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Maps API', 'React.ts'],
+            links: [
+                { label: 'product', href: 'https://campusconnects.net/' },
+                // { label: 'github', href: '#' },
+                // { label: 'docs', href: '#' }
+            ]
+        },
+
 
     ];
     return (

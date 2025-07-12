@@ -43,6 +43,15 @@
     animation: pulse 2s infinite;
 }
 
+.ascii-art {
+    color: #f85149;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    margin: 1rem 0;
+    white-space: pre;
+    text-align: center;
+}
+
 @keyframes pulse {
     0% {
         opacity: 1;

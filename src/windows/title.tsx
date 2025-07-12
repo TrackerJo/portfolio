@@ -30,16 +30,16 @@ const TitleWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
                             </div>
                         </div>
                         <div className="ascii-art">
-                            {`     ╔═══════════════════════════════╗
-     ║  > Currently coding in:       ║
-     ║    • React                    ║
-     ║    • Python                   ║
-     ║    • Dart                     ║
-     ║                               ║
-     ║  > Coffee consumed today: 4   ║
-     ║  > Commits pushed: 23         ║
-     ║  > Issues closed: 7           ║
-     ╚═══════════════════════════════╝`}
+                            {`╔═══════════════════════════════╗
+║  > Currently coding in:       ║
+║    • React                    ║
+║    • Python                   ║
+║    • Dart                     ║
+║                               ║
+║  > Coffee consumed today: 4   ║
+║  > Commits pushed: 23         ║
+║  > Issues closed: 7           ║
+╚═══════════════════════════════╝`}
                         </div>
                     </div>
                 </div>

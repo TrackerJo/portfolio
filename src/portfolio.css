@@ -88,13 +88,7 @@
     padding-left: 1rem;
 }
 
-.ascii-art {
-    color: #f85149;
-    font-size: 0.8rem;
-    line-height: 1.2;
-    margin: 1rem 0;
-    white-space: pre;
-}
+
 
 .typing-animation {
     border-right: 2px solid #7ee787;
@@ -134,7 +128,7 @@
 
 @media (max-width: 768px) {
     .hero-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 
     .hero-text h1 {
