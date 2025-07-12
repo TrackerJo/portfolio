@@ -1,0 +1,41 @@
+.contact-section {
+    margin-top: 2rem;
+}
+
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.contact-method:hover {
+    border-color: #58a6ff;
+}
+
+.contact-method label {
+    color: #58a6ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.contact-method label:hover {
+    color: #79c0ff;
+}
+
+.contact-method span {
+    cursor: pointer;
+}
