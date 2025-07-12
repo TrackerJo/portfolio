@@ -93,7 +93,7 @@ const Portfolio: React.FC = () => {
         <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         <div className="footer">
-          <p>© 2025 Nathaniel Kemme Nash | Built with ❤️ and lots of ☕</p>
+          <p>© 2025 Nathaniel Kemme Nash</p>
         </div>
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
