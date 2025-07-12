@@ -83,3 +83,31 @@
     content: "$ ";
     color: #7ee787;
 }
+
+.project-enter-button {
+    background: transparent;
+    border: none;
+    color: #58a6ff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Add a fade in animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project.fade-in-project {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
