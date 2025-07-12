@@ -20,7 +20,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
     const windowRef = useRef<HTMLDivElement>(null);
     const fullText = "cat more_projects.json | jq '.'";
     const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
-
+    const [hasFinishedTyping, setHasFinishedTyping] = useState(false);
 
     // Intersection observer to detect when component is in view
     useEffect(() => {
@@ -51,11 +51,31 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
                 i++;
             } else {
                 clearInterval(timer);
+
+                setHasFinishedTyping(true);
             }
         }, 100);
 
+
+
         return () => clearInterval(timer);
     }, [isVisible]);
+
+    // Separate useEffect for handling keypress with current values
+    useEffect(() => {
+        function handleEnterKeyPress(e: KeyboardEvent) {
+            console.log(typingText, fullText, isVisible);
+            console.log(hasFinishedTyping);
+            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter') {
+                setViewingMore(true);
+            }
+        }
+
+        if (hasFinishedTyping) {
+            document.addEventListener('keydown', handleEnterKeyPress);
+            return () => document.removeEventListener('keydown', handleEnterKeyPress);
+        }
+    }, [typingText, fullText, isVisible, hasFinishedTyping]);
     const projects: Project[] = [
 
         {
@@ -137,8 +157,22 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
                 { label: 'github', href: 'https://github.com/TrackerJo/html-refactoring' }
             ]
 
+        },
+        {
+            title: 'Robot Mail Sender - A Custom Solution for Sending Photos taken by a Robot',
+            status: 'Robot',
+            description: 'Robot Mail Sender is a custom solution for sending photos taken by a robot. It uses SFTP and SSH to securely transfer files from the robot to a server, and then the servers hosts a simple web interface to get the user’s email and send the photos via SMTP. This was desgined as a marketing tool for a High School\'s Computer Science program, allowing students to send photos taken by a robot to their parents.',
+            technologies: ['Python', 'SMTP', 'SFTP', 'SSH', 'HTTP', 'HTML', 'CSS'],
+            links: [
+
+                {
+                    label: 'github', href: 'https://github.com/TrackerJo/NAOMailServer'
+
+                }
+            ]
         }
     ];
+
     useEffect(() => {
         if (!viewingMore) {
             setVisibleProjects([]);
