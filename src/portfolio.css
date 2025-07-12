@@ -143,4 +143,8 @@
         flex-direction: column;
         gap: 0.5rem;
     }
+
+    .ascii-art {
+        font-size: 0.4rem !important;
+    }
 }

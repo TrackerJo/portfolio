@@ -51,7 +51,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
         {
             title: 'Campus Connect - High School Student Engagement Platform',
             status: 'SaaS',
-            description: 'A web and mobile platform connecting high school students with extracurricular activities, ride sharing, and career opportunities.',
+            description: 'Campus Connect unifies scheduling and activity management for students, teachers, and parents. Students manage activities, commutes, and opportunities; teachers create synced schedules and communicate in-app; parents track their child’s activities—all with real-time communication and easy calendar integration.',
             technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Maps API', 'React.ts'],
             links: [
                 { label: 'product', href: 'https://campusconnects.net/' },

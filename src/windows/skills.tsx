@@ -13,7 +13,7 @@ const SkillsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick
         },
         {
             category: 'Backend',
-            items: ['Firebase', 'Google Cloud APIs', 'Google Sheets API', 'MySQL', 'Python', 'HTTP APIs']
+            items: ['Firebase', 'Google Cloud APIs', 'MySQL', 'Python', 'HTTP APIs']
         },
         {
             category: 'DevOps & Tools',
