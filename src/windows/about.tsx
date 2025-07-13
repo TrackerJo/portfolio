@@ -70,7 +70,7 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
 
     const handleClick = () => {
 
-        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/Nathaniel%20Kemme%20Nash's%20Resume%202025.pdf?alt=media&token=c06794f6-10f5-4dc9-881b-6b62e06479ff", "_blank");
+        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel%20Kemme%20Nash's%20Resume%202025.pdf?alt=media", "_blank");
 
     }
 
