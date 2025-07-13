@@ -4,6 +4,7 @@ import ContactWindow from './windows/contact';
 import SkillsWindow from './windows/skills';
 import ProjectsWindow from './windows/projects';
 import TitleWindow from './windows/title';
+import AboutWindow from './windows/about';
 
 
 
@@ -82,7 +83,7 @@ const Portfolio: React.FC = () => {
       <div className="terminal-container">
         {/* Main Terminal Window */}
         <TitleWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-
+        <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} />
         {/* Skills Terminal */}
         <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
