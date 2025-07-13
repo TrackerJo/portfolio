@@ -28,6 +28,8 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
+                } else {
+                    setIsVisible(false);
                 }
             },
             { threshold: 0.1 }
@@ -42,6 +44,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
 
     // Typing effect - only starts when visible
     useEffect(() => {
+        if (hasFinishedTyping) return; // Prevents re-triggering if already finished
         if (!isVisible) return;
 
         let i = 0;
@@ -190,7 +193,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
         animateProjects();
     }, [viewingMore]);
     return (
-        <div className="terminal-window" onClick={handleTerminalButtonClick} ref={windowRef}>
+        <div className="terminal-window" onClick={handleTerminalButtonClick} >
             <div className="terminal-header">
                 <div className="terminal-button close"></div>
                 <div className="terminal-button minimize"></div>
@@ -227,7 +230,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
                         </div>
                     ))}
                 </div>
-                <span className="prompt">nathaniel@portfolio:~$</span><span className={`command ${viewingMore ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText && !viewingMore ? <button className="project-enter-button" onClick={() => setViewingMore(true)} >↵</button> : null}
+                <span className="prompt" ref={windowRef}>nathaniel@portfolio:~$</span><span className={`command ${viewingMore ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText && !viewingMore ? <button className="project-enter-button" onClick={() => setViewingMore(true)} >↵</button> : null}
                 <div className="projects-container more-projects" style={{ display: viewingMore ? 'block' : 'none' }}>
                     {visibleProjects.map((project, index) => (
                         <div key={index} className={`project fade-in-project visible`}>

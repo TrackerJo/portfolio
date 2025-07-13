@@ -54,7 +54,7 @@ const ContactWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClic
         { icon: '🔗', label: 'linkedin.com/in/nathanielkn   ', href: 'https://www.linkedin.com/in/nathaniel-kemme-nash-889235252/' }
     ];
     return (
-        <div className="terminal-window" onClick={handleTerminalButtonClick} ref={windowRef}>
+        <div className="terminal-window" onClick={handleTerminalButtonClick}>
             <div className="terminal-header">
                 <div className="terminal-button close"></div>
                 <div className="terminal-button minimize"></div>
@@ -75,7 +75,7 @@ const ContactWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClic
                     ))}
                 </div>
                 <div className="output" style={{ marginTop: '2rem' }}>
-                    <span className="prompt">nathaniel@portfolio:~$</span> <span className="command typing-animation">{typingText}</span>
+                    <span className="prompt" ref={windowRef}>nathaniel@portfolio:~$</span> <span className="command typing-animation">{typingText}</span>
                 </div>
             </div>
         </div>
