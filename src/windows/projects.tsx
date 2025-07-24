@@ -13,7 +13,7 @@ interface Project {
 
 
 
-const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick: (e: React.MouseEvent<HTMLDivElement>) => void }) => {
+const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTerminalButtonClick: (e: React.MouseEvent<HTMLDivElement>) => void, listenToEnter: boolean }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [typingText, setTypingText] = useState('');
     const [viewingMore, setViewingMore] = useState(false);
@@ -69,7 +69,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
         function handleEnterKeyPress(e: KeyboardEvent) {
             console.log(typingText, fullText, isVisible);
             console.log(hasFinishedTyping);
-            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter') {
+            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter' && listenToEnter) {
                 setViewingMore(true);
             }
         }
@@ -78,7 +78,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonCli
             document.addEventListener('keydown', handleEnterKeyPress);
             return () => document.removeEventListener('keydown', handleEnterKeyPress);
         }
-    }, [typingText, fullText, isVisible, hasFinishedTyping]);
+    }, [typingText, fullText, isVisible, hasFinishedTyping, listenToEnter]);
     const projects: Project[] = [
 
         {

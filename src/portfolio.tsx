@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Portfolio.css';
 import ContactWindow from './windows/contact';
 import SkillsWindow from './windows/skills';
 import ProjectsWindow from './windows/projects';
 import TitleWindow from './windows/title';
 import AboutWindow from './windows/about';
+import FallingCode from './FallingCookie/falling_cookie_section';
+import CookieWindow from './windows/cookie';
+import FallingCookieSection from './FallingCookie/falling_cookie_section';
 
 
 
 const Portfolio: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isCookieWindowOpen, setIsCookieWindowOpen] = useState(false);
 
 
 
@@ -61,10 +65,15 @@ const Portfolio: React.FC = () => {
     window.addEventListener('resize', resizeCanvas);
     const interval = setInterval(draw, 35);
 
+
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       clearInterval(interval);
+
     };
+
+
+
   }, []);
 
   const handleTerminalButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -83,12 +92,12 @@ const Portfolio: React.FC = () => {
       <div className="terminal-container">
         {/* Main Terminal Window */}
         <TitleWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-        <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} />
+        <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
         {/* Skills Terminal */}
         <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         {/* Projects Terminal */}
-        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
+        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
 
         {/* Contact Terminal */}
         <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />
@@ -99,6 +108,7 @@ const Portfolio: React.FC = () => {
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
 
+      {isCookieWindowOpen ? <CookieWindow handleTerminalButtonClick={handleTerminalButtonClick} onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
     </div>
   );
 };

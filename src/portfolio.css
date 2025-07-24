@@ -117,7 +117,22 @@
 }
 
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+    /* For horizontal scrollbars */
+}
 
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
 
 .footer {
     text-align: center;
@@ -147,5 +162,9 @@
 
     .ascii-art {
         font-size: 0.4rem !important;
+    }
+
+    .project-enter-button {
+        font-size: 0.9rem;
     }
 }

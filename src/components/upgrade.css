@@ -1,0 +1,73 @@
+.upgrade-container {
+    width: 300px;
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    background-color: #21262d;
+
+    border-radius: 8px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #21262d;
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.upgrade-container.cannot-upgrade {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.upgrade-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border: 1px solid #58a6ff;
+}
+
+.upgrade-content {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.upgrade-icon {
+    background: url(//cdn.dashnet.org/cookieclicker/img/buildings.png?v=2.052) no-repeat;
+    width: 64px;
+    height: 63px;
+}
+
+.upgrade-price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    /* disable highlighting */
+
+}
+
+.price-cookie {
+    width: 24px;
+    height: 24px;
+
+}
+
+.upgrade-count {
+
+    padding-right: 10px;
+    color: #7d8590;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .upgrade-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+
+}

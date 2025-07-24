@@ -9,7 +9,7 @@ const SkillsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick
     const skills: Skill[] = [
         {
             category: 'Frontend',
-            items: ['React.js / React.ts', 'TypeScript', 'Dart (Flutter)', 'Google Apps Script', 'Google OAuth']
+            items: ['React', 'TypeScript', 'Dart (Flutter)', 'Google Apps Script', 'Google OAuth']
         },
         {
             category: 'Backend',
@@ -17,7 +17,7 @@ const SkillsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick
         },
         {
             category: 'DevOps & Tools',
-            items: ['Git / Github', 'Google Analytics', 'App Store / Play Store Release Management', 'Firebase Cloud Functions, Scheduled Tasks (Cloud Scheduler)', 'Firebase Hosting']
+            items: ['Git / Github', 'Google Analytics', 'App Store / Play Store Release Management', 'Firebase Hosting']
         }
     ];
 

@@ -1,0 +1,25 @@
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 00.8;
+
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+}
+
+.click-text {
+    position: absolute;
+    /* no pointer events */
+    pointer-events: none;
+    animation: fadeOut 3s forwards;
+
+}

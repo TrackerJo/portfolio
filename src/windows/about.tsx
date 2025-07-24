@@ -4,7 +4,7 @@ import ProfilePic from "../assets/profile.png";
 import { useState, useRef, useEffect } from "react";
 
 
-const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick: (e: React.MouseEvent<HTMLDivElement>) => void }) => {
+const AboutWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTerminalButtonClick: (e: React.MouseEvent<HTMLDivElement>) => void, listenToEnter: boolean }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [typingText, setTypingText] = useState('');
 
@@ -33,8 +33,9 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
     }, []);
 
     useEffect(() => {
+
         if (hasFinishedTyping) return; // Prevents re-triggering if already finished
-        if (!isVisible) return;
+        if (!isVisible && typingText.length == 0) return;
 
         let i = 0;
         const timer = setInterval(() => {
@@ -57,7 +58,7 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
         function handleEnterKeyPress(e: KeyboardEvent) {
             console.log(typingText, fullText, isVisible);
             console.log(hasFinishedTyping);
-            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter') {
+            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter' && listenToEnter) {
                 handleClick();
             }
         }
@@ -66,7 +67,7 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
             document.addEventListener('keydown', handleEnterKeyPress);
             return () => document.removeEventListener('keydown', handleEnterKeyPress);
         }
-    }, [typingText, fullText, isVisible, hasFinishedTyping]);
+    }, [typingText, fullText, isVisible, hasFinishedTyping, listenToEnter]);
 
     const handleClick = () => {
 
@@ -89,7 +90,7 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
                     </div>
                     <div className="hero-content">
                         <div className="hero-text">
-                            <p>Hi! I'm Nathaniel Kemme Nash, a self taught programmer who is passionionate about making websites and apps that help people, even if it's just one person. I've been coding for about 8 years, and in that time I've been the technical co-founder of a sports recruiting profiles company, made a few small video games, a programming language, an e-commerce store for a school, released 4 apps on the App Store, and so much more!</p>
+                            <p>Hi! I'm Nathaniel Kemme Nash, a self taught programmer who is passionate about making websites and apps that help people, even if it's just one person. I've been coding for about 8 years, and in that time I've been the technical co-founder of a sports recruiting profiles company, made a few small video games, a programming language, an e-commerce store for a school, released 4 apps on the App Store, and so much more!</p>
                         </div>
                         <div className="hero-picture">
                             <div className="profile-picture">
@@ -98,7 +99,9 @@ const AboutWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick:
                         </div>
 
                     </div>
-                    <span className="prompt" ref={windowRef}>nathaniel@portfolio:~$</span><span className={`command ${hasFinishedTyping ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText ? <button className="project-enter-button" onClick={() => handleClick()} >↵</button> : null}
+                    <div className="prompt-section">
+                        <span className="prompt" ref={windowRef}>nathaniel@portfolio:~$</span><span className={`command ${hasFinishedTyping ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText ? <button className="project-enter-button" onClick={() => handleClick()} >↵</button> : null}
+                    </div>
                 </div>
             </div>
         </div >
