@@ -8,6 +8,7 @@ import AboutWindow from './windows/about';
 import FallingCode from './FallingCookie/falling_cookie_section';
 import CookieWindow from './windows/cookie';
 import FallingCookieSection from './FallingCookie/falling_cookie_section';
+import ExperienceWindow from './windows/experience';
 
 
 
@@ -93,11 +94,15 @@ const Portfolio: React.FC = () => {
         {/* Main Terminal Window */}
         <TitleWindow handleTerminalButtonClick={handleTerminalButtonClick} />
         <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
+        {/* Experience Terminal */}
+        <ExperienceWindow handleTerminalButtonClick={handleTerminalButtonClick} />
         {/* Skills Terminal */}
         <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         {/* Projects Terminal */}
         <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
+
+
 
         {/* Contact Terminal */}
         <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />

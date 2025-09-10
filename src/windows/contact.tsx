@@ -51,7 +51,7 @@ const ContactWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClic
     const contactMethods: ContactMethod[] = [
         { icon: '📧', label: 'nkemme54@gmail.com', href: 'mailto:nkemme54@gmail.com' },
         { icon: '💻', label: 'github.com/trackerjo', href: 'https://github.com/TrackerJo' },
-        { icon: '🔗', label: 'linkedin.com/in/nathanielkn   ', href: 'https://www.linkedin.com/in/nathaniel-kemme-nash-889235252/' }
+        { icon: '🔗', label: 'linkedin.com/in/nathanielkn   ', href: 'https://www.linkedin.com/in/nkemmenash/' }
     ];
     return (
         <div className="terminal-window" onClick={handleTerminalButtonClick}>

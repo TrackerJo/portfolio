@@ -146,9 +146,12 @@ const CookieWindow = ({ handleTerminalButtonClick, onClose }: { handleTerminalBu
         setCookiesClick((prev) => prev.filter((text) => text.id !== id));
     }
 
-    function styleCookies(cookies: number): string {
+    function styleCookies(cookies: number, includeDecimal: boolean): string {
         let styledCookies = "";
-        const cookiesString = cookies.toString();
+        let cookiesDecimal = cookies % 1;
+        const cookiesString = Math.floor(cookies).toString();
+
+
         const cookiesArray = cookiesString.toString().split('');
         cookiesArray.reverse();
         const cookiesStringR = cookiesArray.join('');
@@ -165,7 +168,7 @@ const CookieWindow = ({ handleTerminalButtonClick, onClose }: { handleTerminalBu
         }
         const styledCookiesArray = styledCookies.split('');
         styledCookiesArray.reverse();
-        return styledCookiesArray.join('');
+        return styledCookiesArray.join('') + (includeDecimal ? (cookiesDecimal > 0 ? cookiesDecimal.toFixed(1).toString().substring(1) : "") : "");
     }
 
     return (
@@ -186,8 +189,8 @@ const CookieWindow = ({ handleTerminalButtonClick, onClose }: { handleTerminalBu
                         <div className="hero-content" ref={cookieHeroRef}>
                             <div className="cookie-section">
                                 <div className="cookie-info">
-                                    <h2 className="cookies-text">{styleCookies(cookies)} cookies</h2>
-                                    <h4 className="cookies-per-second-text">per second: {styleCookies(cookiesPerSecond)}</h4>
+                                    <h2 className="cookies-text">{styleCookies(cookies, false)} cookies</h2>
+                                    <h4 className="cookies-per-second-text">per second: {styleCookies(cookiesPerSecond, true)}</h4>
                                 </div>
 
 
