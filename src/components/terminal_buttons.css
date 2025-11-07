@@ -1,0 +1,32 @@
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+    /* padding: 8px; */
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    transform: unset;
+
+}
+
+.terminal-button-clicked {
+    transform: scale(0.9) !important;
+    z-index: 10;
+}
+
+.terminal-button.close {
+    background: #ff5f56;
+}
+
+.terminal-button.minimize {
+    background: #ffbd2e;
+}
+
+.terminal-button.maximize {
+    background: #27ca3f;
+}

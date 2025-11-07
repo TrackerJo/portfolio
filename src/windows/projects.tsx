@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./projects.css";
+import TerminalButtons from "../components/terminal_buttons";
 
 
 interface Project {
@@ -17,10 +18,13 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
     const [isVisible, setIsVisible] = useState(false);
     const [typingText, setTypingText] = useState('');
     const [viewingMore, setViewingMore] = useState(false);
+    const textRef = useRef<HTMLDivElement>(null);
     const windowRef = useRef<HTMLDivElement>(null);
     const fullText = "cat more_projects.json | jq '.'";
     const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
     const [hasFinishedTyping, setHasFinishedTyping] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [currentY, setCurrentY] = useState(0);
 
     // Intersection observer to detect when component is in view
     useEffect(() => {
@@ -35,8 +39,8 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
             { threshold: 0.1 }
         );
 
-        if (windowRef.current) {
-            observer.observe(windowRef.current);
+        if (textRef.current) {
+            observer.observe(textRef.current);
         }
 
         return () => observer.disconnect();
@@ -100,7 +104,8 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
             links: [
                 { label: 'IDE', href: 'https://trackerjo.github.io/ProfessorJavaish/    ' },
                 { label: 'github', href: 'https://github.com/TrackerJo/Javaish' },
-                { label: 'slideshow', href: 'https://docs.google.com/presentation/d/1cWa6pa6btzCKTbh4yDYVNZGC_aGPY99N2ixCo83qcX8/edit?usp=sharing' }
+                { label: 'slideshow', href: 'https://docs.google.com/presentation/d/1cWa6pa6btzCKTbh4yDYVNZGC_aGPY99N2ixCo83qcX8/edit?usp=sharing' },
+                { label: 'research paper', href: 'https://www.overleaf.com/download/project/660329c573bd5a1ed798e272/build/199b07ef935-2cfb4305e3da688e/output/output.pdf?compileGroup=priority&popupDownload=true&clsiserverid=clsi-pre-emp-c2d-d-f-17cg' }
             ]
         },
         {
@@ -192,12 +197,46 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
 
         animateProjects();
     }, [viewingMore]);
+
+    useEffect(() => {
+        //handle scroll locking when in fullscreen mode
+        const handleScroll = (e: WheelEvent) => {
+            if (isFullscreen) {
+                // e.preventDefault();
+                //check if scroll is past windowRef bottom or above windowRef top but still allow scrolling in the other direction
+                const windowRect = windowRef.current?.getBoundingClientRect();
+                if (windowRect) {
+                    if ((e.deltaY > 0 && windowRect.bottom <= window.innerHeight) || (e.deltaY < 0 && windowRect.top >= 0)) {
+                        e.preventDefault();
+                    }
+                }
+                // window.scrollTo(0, currentY);
+            }
+        };
+
+        if (isFullscreen) {
+            setCurrentY(window.scrollY);
+            window.addEventListener("wheel", handleScroll, { passive: false });
+        } else {
+            window.removeEventListener("wheel", handleScroll);
+        }
+
+        return () => {
+            window.removeEventListener("wheel", handleScroll);
+        };
+    }, [isFullscreen, currentY]);
+
     return (
-        <div className="terminal-window" onClick={handleTerminalButtonClick} >
+        <div className={`terminal-window ${isFullscreen ? "terminal-window-fullscreen" : ""}`
+        } onClick={handleTerminalButtonClick} ref={windowRef} >
             <div className="terminal-header">
-                <div className="terminal-button close"></div>
-                <div className="terminal-button minimize"></div>
-                <div className="terminal-button maximize"></div>
+                <TerminalButtons onMaximizeClick={() => {
+                    if (!isFullscreen) {
+                        windowRef.current?.scrollIntoView({ behavior: 'smooth' });
+                        setCurrentY(window.scrollY);
+                    }
+                    setIsFullscreen(!isFullscreen)
+                }} />
                 <div className="terminal-title">projects.json</div>
             </div>
             <div className="terminal-content">
@@ -230,7 +269,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
                         </div>
                     ))}
                 </div>
-                <span className="prompt" ref={windowRef}>nathaniel@portfolio:~$</span><span className={`command ${viewingMore ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText && !viewingMore ? <button className="project-enter-button" onClick={() => setViewingMore(true)} >↵</button> : null}
+                <span className="prompt" ref={textRef}>nathaniel@portfolio:~$</span><span className={`command ${viewingMore ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText && !viewingMore ? <button className="project-enter-button" onClick={() => setViewingMore(true)} >↵</button> : null}
                 <div className="projects-container more-projects" style={{ display: viewingMore ? 'block' : 'none' }}>
                     {visibleProjects.map((project, index) => (
                         <div key={index} className={`project fade-in-project visible`}>
@@ -257,7 +296,7 @@ const ProjectsWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTe
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

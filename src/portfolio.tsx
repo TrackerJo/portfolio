@@ -1,18 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Portfolio.css';
 import ContactWindow from './windows/contact';
 import SkillsWindow from './windows/skills';
 import ProjectsWindow from './windows/projects';
 import TitleWindow from './windows/title';
 import AboutWindow from './windows/about';
-import FallingCode from './FallingCookie/falling_cookie_section';
+
 import CookieWindow from './windows/cookie';
 import FallingCookieSection from './FallingCookie/falling_cookie_section';
 import ExperienceWindow from './windows/experience';
+import GitHubStatsWindow from './windows/github_stats';
 
 
 
-const Portfolio: React.FC = () => {
+const Portfolio = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCookieWindowOpen, setIsCookieWindowOpen] = useState(false);
 
@@ -78,13 +79,13 @@ const Portfolio: React.FC = () => {
   }, []);
 
   const handleTerminalButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains('terminal-button')) {
-      target.style.transform = 'scale(0.9)';
-      setTimeout(() => {
-        target.style.transform = 'scale(1)';
-      }, 150);
-    }
+    // const target = e.target as HTMLElement;
+    // if (target.classList.contains('terminal-button')) {
+    //   target.style.transform = 'scale(0.9)';
+    //   setTimeout(() => {
+    //     target.style.transform = 'scale(1)';
+    //   }, 150);
+    // }
   };
 
   return (
@@ -96,13 +97,15 @@ const Portfolio: React.FC = () => {
         <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
         {/* Experience Terminal */}
         <ExperienceWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-        {/* Skills Terminal */}
-        <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         {/* Projects Terminal */}
         <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
 
+        {/* Skills Terminal */}
+        <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
+        {/* GitHub Stats Terminal */}
+        <GitHubStatsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         {/* Contact Terminal */}
         <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />
