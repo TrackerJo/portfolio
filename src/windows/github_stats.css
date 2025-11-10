@@ -17,6 +17,14 @@
 
 }
 
+.contribution-graph h2 {
+    margin-left: -20px;
+    margin-top: -10px;
+    font-size: 20px;
+    padding-bottom: 10px;
+    font-weight: 500;
+}
+
 .stats-card:hover {
     border-color: #58a6ff;
 }
@@ -35,6 +43,7 @@
     align-items: center;
     background: #0d1117;
     justify-content: center;
+    -webkit-overflow-scrolling: touch;
 }
 
 .contribution-graph {
@@ -164,11 +173,45 @@
 @media (max-width: 1024px) {
     .contribution-graph {
         overflow-x: auto;
+        max-width: 100%;
     }
 
-    .months-container,
+    /* .months-container,
     .contribution-grid-container {
-        min-width: 800px;
+        min-width: 600px;
+    } */
+
+    .contribution-day {
+        width: 8px;
+        height: 8px;
+    }
+
+    .day-label {
+        height: 8px;
+        font-size: 9px;
+    }
+
+    .months-container {
+        grid-template-columns: repeat(53, 8px);
+        gap: 3px;
+        padding-left: 28px;
+    }
+
+    .contribution-grid {
+        gap: 3px;
+    }
+
+    .week-column {
+        gap: 3px;
+    }
+
+    .contribution-grid-container {
+        gap: 6px;
+    }
+
+    .days-labels {
+        width: 25px;
+        gap: 3px;
     }
 }
 
@@ -267,9 +310,87 @@
 @media (max-width: 768px) {
     .github-stats-container {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
     }
 
     .stats-card {
-        padding: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .stats-card.contribution-graph-card {
+        padding: 1rem;
+    }
+
+    .contribution-graph h2 {
+        font-size: 16px;
+        margin-left: 0;
+        margin-top: 0;
+        padding-bottom: 8px;
+    }
+
+    .contribution-day {
+        width: 7px;
+        height: 7px;
+    }
+
+    .day-label {
+        height: 7px;
+        font-size: 8px;
+    }
+
+    .months-container {
+        grid-template-columns: repeat(53, 7px);
+        gap: 2px;
+        padding-left: 24px;
+        margin-bottom: 6px;
+    }
+
+    .month-label {
+        font-size: 10px;
+    }
+
+    .contribution-grid {
+        gap: 2px;
+    }
+
+    .week-column {
+        gap: 2px;
+    }
+
+    .contribution-grid-container {
+        gap: 5px;
+    }
+
+    .days-labels {
+        width: 22px;
+        gap: 2px;
+    }
+
+    .contribution-legend {
+        margin-top: 12px;
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .legend-box {
+        width: 10px;
+        height: 10px;
+    }
+
+    .recent-commit-card {
+        padding: 1rem;
+    }
+
+    .commit-header h3 {
+        font-size: 14px;
+    }
+
+    .commit-message {
+        font-size: 14px;
+    }
+
+    .commit-details {
+        font-size: 12px;
     }
 }

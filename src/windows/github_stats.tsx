@@ -20,6 +20,7 @@ const GitHubStatsWindow = ({ handleTerminalButtonClick }: { handleTerminalButton
     const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
     const [recentCommit, setRecentCommit] = useState<RecentCommit | null>(null);
+    const [totalContributions, setTotalContributions] = useState<number>(0);
     const windowRef = useRef<HTMLDivElement>(null);
 
     // Fetch contribution data from GitHub API
@@ -28,7 +29,7 @@ const GitHubStatsWindow = ({ handleTerminalButtonClick }: { handleTerminalButton
             try {
                 const response = await fetch('https://github-contributions-api.jogruber.de/v4/TrackerJo?y=last');
                 const data = await response.json();
-
+                let totalContributions = 0;
                 const days: ContributionDay[] = [];
 
                 // Parse the contributions from the API response
@@ -41,8 +42,11 @@ const GitHubStatsWindow = ({ handleTerminalButtonClick }: { handleTerminalButton
                             count: contribution.count,
                             level: contribution.level
                         });
+                        totalContributions += contribution.count;
                     });
                 }
+                setTotalContributions(totalContributions);
+
 
                 setContributions(days);
             } catch (error) {
@@ -294,6 +298,7 @@ const GitHubStatsWindow = ({ handleTerminalButtonClick }: { handleTerminalButton
                     {/* Contribution Graph */}
                     <div className="stats-card full-width contribution-graph-card">
                         <div className={`contribution-graph ${isVisible ? 'fade-in' : ''}`} style={{ animationDelay: '0.5s', position: 'relative' }}>
+                            <h2>{totalContributions} contributions in the last year</h2>
                             {/* Month labels */}
                             <div className="months-container">
                                 {getMonths().map((month, i) => (

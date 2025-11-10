@@ -126,7 +126,7 @@ const AboutWindow = ({ handleTerminalButtonClick, listenToEnter }: { handleTermi
                     </div>
                     <div className="hero-content">
                         <div className="hero-text">
-                            <p>Hi! I'm Nathaniel Kemme Nash, a self taught programmer who is passionate about making websites and apps that help people, even if it's just one person. I've been coding for about 8 years, and in that time I've been the technical co-founder of a sports recruiting profiles company, made a few small video games, a programming language, an e-commerce store for a school, released 4 apps on the App Store, and so much more!</p>
+                            <p>Hi! I'm Nathaniel Kemme Nash, a self-taught programmer who is passionate about making websites and apps that help people, even if it's just one person. I've been coding for about 8 years, and in that time, I've been the technical co-founder of a sports recruiting profiles company, released 4 apps with over 500+ users, developed a programming language and an online IDE, an e-commerce store for a school, and so much more!</p>
                         </div>
                         <div className="hero-picture">
                             <div className="profile-picture">
