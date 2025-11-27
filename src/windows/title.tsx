@@ -10,7 +10,7 @@ const TitleWindow = () => {
             <div className="hero-content">
                 <div className="hero-text">
                     <h1>Nathaniel Kemme Nash</h1>
-                    <p>Full Stack Developer & Flutter Developer | Building Practical Products with Purpose</p>
+                    <p>Full Stack & Flutter Developer | Building Impactful Products with Purpose</p>
                     <div className="status-indicators">
                         <div className="status">
                             <div className="status-dot"></div>

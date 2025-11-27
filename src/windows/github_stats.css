@@ -3,6 +3,7 @@
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
+
 }
 
 .stats-card {
@@ -44,6 +45,8 @@
     background: #0d1117;
     justify-content: center;
     -webkit-overflow-scrolling: touch;
+    margin-bottom: 10px;
+
 }
 
 .contribution-graph {

@@ -38,6 +38,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                 setTypingText((prev) => prev.slice(0, -1));
             } else if (e.key === "Enter") {
                 const result = enterCommand(typingText);
+                if (isMobile) setFirstExperience(true);
                 if (!result) {
                     setInvalidCommand(typingText)
                     setEnteredInvalidCommand(true)
@@ -80,7 +81,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
             <div className="terminal-content" style={{ display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1, overflow: 'hidden' }}>
                 <div className="hero-section">
                     <div className="output">
-                        <span className="prompt">nathaniel@portfolio:~$</span> <span className="command">{command}</span>
+                        <span className="prompt">nathaniel@portfolio:~$</span><span className="command">{command}</span>
                     </div>
                     {/* <div className="hero-content"> */}
                     {children}
