@@ -14,14 +14,14 @@ interface RecentCommit {
     sha: string;
 }
 
-const GitHubStatsWindow = () => {
-
+const GitHubStatsWindow = ({ handleTerminalButtonClick }: { handleTerminalButtonClick: (e: React.MouseEvent<HTMLDivElement>) => void }) => {
+    const [isVisible, setIsVisible] = useState(false);
     const [contributions, setContributions] = useState<ContributionDay[]>([]);
     const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
     const [recentCommit, setRecentCommit] = useState<RecentCommit | null>(null);
     const [totalContributions, setTotalContributions] = useState<number>(0);
-
+    const windowRef = useRef<HTMLDivElement>(null);
 
     // Fetch contribution data from GitHub API
     useEffect(() => {
@@ -125,7 +125,22 @@ const GitHubStatsWindow = () => {
     }, []);
 
     // Intersection observer to detect when component is in view
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
 
+        if (windowRef.current) {
+            observer.observe(windowRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     const getColor = (level: number) => {
         const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
@@ -221,135 +236,145 @@ const GitHubStatsWindow = () => {
     }
 
     return (
-        <>
-
-            <div className="section-title">:: GitHub Statistics</div>
-
-            <div className="github-stats-container">
-
-                {/* Recent Commit Card */}
-                <div
-                    className={`stats-card recent-commit-card fade-in`}
-                    style={{ animationDelay: '0.1s' }}
-                    onClick={(e) => {
-                        if (recentCommit) {
-                            e.stopPropagation();
-                            window.open(`https://github.com/${recentCommit.repo}`, '_blank');
-                        }
-                    }}
-                >
-                    <div className="recent-commit-content">
-                        <div className="commit-header">
-                            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '8px' }}>
-                                <path fillRule="evenodd" d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5h-3.32zM8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
-                            </svg>
-                            <h3>Currently Working On</h3>
-                        </div>
-                        {recentCommit ? (
-                            <>
-                                <div className="commit-message">{recentCommit.message}</div>
-                                <div className="commit-details">
-                                    <span className="commit-repo">{recentCommit.repo}</span>
-                                    <span className="commit-separator">•</span>
-                                    <span className="commit-sha">{recentCommit.sha}</span>
-                                </div>
-                                <div className="commit-date">{recentCommit.date}</div>
-                            </>
-                        ) : (
-                            <div className="commit-loading">Loading latest commit...</div>
-                        )}
-                    </div>
+        <div className="terminal-window" onClick={handleTerminalButtonClick} ref={windowRef}>
+            <div className="terminal-header">
+                <div className="terminal-button close"></div>
+                <div className="terminal-button minimize"></div>
+                <div className="terminal-button maximize"></div>
+                <div className="terminal-title">github_stats.sh</div>
+            </div>
+            <div className="terminal-content">
+                <div className="output">
+                    <span className="prompt">nathaniel@portfolio:~$</span> <span className="command">./github_stats.sh --user TrackerJo</span>
                 </div>
+                <div className="section-title">:: GitHub Statistics</div>
 
-                {/* Top Languages Card */}
-                <div className="stats-card">
-                    <img
-                        src="https://github-readme-stats.vercel.app/api/top-langs/?username=TrackerJo&layout=compact&theme=github_dark&hide_border=true&bg_color=161b22&title_color=58a6ff&text_color=c9d1d9"
-                        alt="Top Languages"
-                        className={`github-stat-image fade-in`}
-                        style={{ animationDelay: '0.3s' }}
-                    />
-                </div>
+                <div className="github-stats-container">
 
-                {/* Contribution Graph */}
-                <div className="stats-card full-width contribution-graph-card">
-                    <div className={`contribution-graph fade-in`} style={{ animationDelay: '0.5s', position: 'relative' }}>
-                        <h2>{totalContributions} contributions in the last year</h2>
-                        {/* Month labels */}
-                        <div className="months-container">
-                            {getMonths().map((month, i) => (
-                                <div
-                                    key={i}
-                                    className="month-label"
-                                    style={{ gridColumn: `${month.offset + 1} / span 4` }}
-                                >
-                                    {month.name}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Days labels and grid */}
-                        <div className="contribution-grid-container">
-                            {/* Day labels */}
-                            <div className="days-labels">
-                                <div className="day-label"></div>
-                                <div className="day-label">Mon</div>
-                                <div className="day-label"></div>
-                                <div className="day-label">Wed</div>
-                                <div className="day-label"></div>
-                                <div className="day-label">Fri</div>
-                                <div className="day-label"></div>
+                    {/* Recent Commit Card */}
+                    <div
+                        className={`stats-card recent-commit-card ${isVisible ? 'fade-in' : ''}`}
+                        style={{ animationDelay: '0.1s' }}
+                        onClick={(e) => {
+                            if (recentCommit) {
+                                e.stopPropagation();
+                                window.open(`https://github.com/${recentCommit.repo}`, '_blank');
+                            }
+                        }}
+                    >
+                        <div className="recent-commit-content">
+                            <div className="commit-header">
+                                <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '8px' }}>
+                                    <path fillRule="evenodd" d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5h-3.32zM8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                                </svg>
+                                <h3>Currently Working On</h3>
                             </div>
+                            {recentCommit ? (
+                                <>
+                                    <div className="commit-message">{recentCommit.message}</div>
+                                    <div className="commit-details">
+                                        <span className="commit-repo">{recentCommit.repo}</span>
+                                        <span className="commit-separator">•</span>
+                                        <span className="commit-sha">{recentCommit.sha}</span>
+                                    </div>
+                                    <div className="commit-date">{recentCommit.date}</div>
+                                </>
+                            ) : (
+                                <div className="commit-loading">Loading latest commit...</div>
+                            )}
+                        </div>
+                    </div>
 
-                            {/* Contribution grid */}
-                            <div className="contribution-grid">
-                                {weeks.map((week, weekIndex) => (
-                                    <div key={weekIndex} className="week-column">
-                                        {week.map((day, dayIndex) => (
-                                            <div
-                                                key={dayIndex}
-                                                className={`contribution-day ${day ? '' : 'empty'}`}
-                                                style={{ backgroundColor: day ? getColor(day.level) : 'transparent' }}
-                                                onMouseEnter={day ? (e) => handleMouseEnter(day, e) : undefined}
-                                                onMouseLeave={day ? handleMouseLeave : undefined}
-                                            />
-                                        ))}
+                    {/* Top Languages Card */}
+                    <div className="stats-card">
+                        <img
+                            src="https://github-readme-stats.vercel.app/api/top-langs/?username=TrackerJo&layout=compact&theme=github_dark&hide_border=true&bg_color=161b22&title_color=58a6ff&text_color=c9d1d9"
+                            alt="Top Languages"
+                            className={`github-stat-image ${isVisible ? 'fade-in' : ''}`}
+                            style={{ animationDelay: '0.3s' }}
+                        />
+                    </div>
+
+                    {/* Contribution Graph */}
+                    <div className="stats-card full-width contribution-graph-card">
+                        <div className={`contribution-graph ${isVisible ? 'fade-in' : ''}`} style={{ animationDelay: '0.5s', position: 'relative' }}>
+                            <h2>{totalContributions} contributions in the last year</h2>
+                            {/* Month labels */}
+                            <div className="months-container">
+                                {getMonths().map((month, i) => (
+                                    <div
+                                        key={i}
+                                        className="month-label"
+                                        style={{ gridColumn: `${month.offset + 1} / span 4` }}
+                                    >
+                                        {month.name}
                                     </div>
                                 ))}
                             </div>
-                        </div>
 
-                        {/* Tooltip */}
-                        {hoveredDay && (
-                            <div
-                                className="contribution-tooltip"
-                                style={{
-                                    left: `${tooltipPosition.x}px`,
-                                    top: `${tooltipPosition.y}px`,
-                                }}
-                            >
-                                <strong>{hoveredDay.count} contributions</strong>
-                                <div>{formatDate(hoveredDay.date)}</div>
+                            {/* Days labels and grid */}
+                            <div className="contribution-grid-container">
+                                {/* Day labels */}
+                                <div className="days-labels">
+                                    <div className="day-label"></div>
+                                    <div className="day-label">Mon</div>
+                                    <div className="day-label"></div>
+                                    <div className="day-label">Wed</div>
+                                    <div className="day-label"></div>
+                                    <div className="day-label">Fri</div>
+                                    <div className="day-label"></div>
+                                </div>
+
+                                {/* Contribution grid */}
+                                <div className="contribution-grid">
+                                    {weeks.map((week, weekIndex) => (
+                                        <div key={weekIndex} className="week-column">
+                                            {week.map((day, dayIndex) => (
+                                                <div
+                                                    key={dayIndex}
+                                                    className={`contribution-day ${day ? '' : 'empty'}`}
+                                                    style={{ backgroundColor: day ? getColor(day.level) : 'transparent' }}
+                                                    onMouseEnter={day ? (e) => handleMouseEnter(day, e) : undefined}
+                                                    onMouseLeave={day ? handleMouseLeave : undefined}
+                                                />
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        )}
 
-                        {/* Legend */}
-                        <div className="contribution-legend">
-                            <span>Less</span>
-                            <div className="legend-box" style={{ backgroundColor: '#161b22' }}></div>
-                            <div className="legend-box" style={{ backgroundColor: '#0e4429' }}></div>
-                            <div className="legend-box" style={{ backgroundColor: '#006d32' }}></div>
-                            <div className="legend-box" style={{ backgroundColor: '#26a641' }}></div>
-                            <div className="legend-box" style={{ backgroundColor: '#39d353' }}></div>
-                            <span>More</span>
+                            {/* Tooltip */}
+                            {hoveredDay && (
+                                <div
+                                    className="contribution-tooltip"
+                                    style={{
+                                        left: `${tooltipPosition.x}px`,
+                                        top: `${tooltipPosition.y}px`,
+                                    }}
+                                >
+                                    <strong>{hoveredDay.count} contributions</strong>
+                                    <div>{formatDate(hoveredDay.date)}</div>
+                                </div>
+                            )}
+
+                            {/* Legend */}
+                            <div className="contribution-legend">
+                                <span>Less</span>
+                                <div className="legend-box" style={{ backgroundColor: '#161b22' }}></div>
+                                <div className="legend-box" style={{ backgroundColor: '#0e4429' }}></div>
+                                <div className="legend-box" style={{ backgroundColor: '#006d32' }}></div>
+                                <div className="legend-box" style={{ backgroundColor: '#26a641' }}></div>
+                                <div className="legend-box" style={{ backgroundColor: '#39d353' }}></div>
+                                <span>More</span>
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
 
-
             </div>
-
-        </>
+        </div>
     );
 }
 

@@ -71,14 +71,14 @@
 
 .output {
     margin: 1rem 0;
+    padding-left: 1rem;
 }
 
 
 
 .typing-animation {
-    padding-left: 2px;
     border-right: 2px solid #7ee787;
-    animation: blink 1s infinite;
+    /* animation: blink 1s infinite; */
 }
 
 @keyframes blink {

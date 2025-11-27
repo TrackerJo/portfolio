@@ -1,0 +1,396 @@
+.github-stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.stats-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.3s ease;
+
+}
+
+.contribution-graph h2 {
+    margin-left: -20px;
+    margin-top: -10px;
+    font-size: 20px;
+    padding-bottom: 10px;
+    font-weight: 500;
+}
+
+.stats-card:hover {
+    border-color: #58a6ff;
+}
+
+.stats-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.stats-card.contribution-card {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(13, 17, 23, 0.4) 100%);
+}
+
+.stats-card.contribution-graph-card {
+    padding: 2rem;
+    overflow-x: auto;
+    align-items: center;
+    background: #0d1117;
+    justify-content: center;
+    -webkit-overflow-scrolling: touch;
+}
+
+.contribution-graph {
+    width: fit-content;
+    opacity: 0;
+    transform: translateY(20px);
+    margin: 0 auto;
+}
+
+.contribution-graph.fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.months-container {
+    display: grid;
+    grid-template-columns: repeat(53, 11px);
+    gap: 4px;
+    margin-bottom: 8px;
+    padding-left: 35px;
+}
+
+.month-label {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+.contribution-grid-container {
+    display: flex;
+    gap: 8px;
+}
+
+.days-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 2px;
+    width: 30px;
+}
+
+.day-label {
+    height: 11px;
+    font-size: 11px;
+    color: #8b949e;
+    display: flex;
+    align-items: center;
+    line-height: 11px;
+    flex-shrink: 0;
+}
+
+.contribution-grid {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+}
+
+.week-column {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contribution-day {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(27, 31, 36, 0.06);
+    flex-shrink: 0;
+}
+
+.contribution-day.empty {
+    cursor: default;
+    border: none;
+    background-color: transparent !important;
+}
+
+.contribution-day:not(.empty):hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.contribution-tooltip {
+    position: absolute;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #c9d1d9;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, calc(-100% - 8px));
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.contribution-tooltip strong {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.contribution-legend {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #8b949e;
+    justify-content: flex-end;
+}
+
+.legend-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(27, 31, 36, 0.06);
+}
+
+.github-stat-image {
+    max-width: 100%;
+    height: auto;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@media (max-width: 1024px) {
+    .contribution-graph {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    /* .months-container,
+    .contribution-grid-container {
+        min-width: 600px;
+    } */
+
+    .contribution-day {
+        width: 8px;
+        height: 8px;
+    }
+
+    .day-label {
+        height: 8px;
+        font-size: 9px;
+    }
+
+    .months-container {
+        grid-template-columns: repeat(53, 8px);
+        gap: 3px;
+        padding-left: 28px;
+    }
+
+    .contribution-grid {
+        gap: 3px;
+    }
+
+    .week-column {
+        gap: 3px;
+    }
+
+    .contribution-grid-container {
+        gap: 6px;
+    }
+
+    .days-labels {
+        width: 25px;
+        gap: 3px;
+    }
+}
+
+.github-stat-image.fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.recent-commit-card {
+    opacity: 0;
+    transform: translateY(20px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.recent-commit-card:hover {
+    border-color: #58a6ff;
+}
+
+.recent-commit-card.fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.recent-commit-content {
+    width: 100%;
+}
+
+.commit-header {
+    display: flex;
+    align-items: center;
+    color: #58a6ff;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.commit-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.commit-message {
+    color: #c9d1d9;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.commit-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+}
+
+.commit-repo {
+    color: #58a6ff;
+    font-weight: 500;
+}
+
+.commit-separator {
+    color: #30363d;
+}
+
+.commit-sha {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+    background: #161b22;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #58a6ff;
+}
+
+.commit-date {
+    color: #8b949e;
+    font-size: 12px;
+}
+
+.commit-loading {
+    color: #8b949e;
+    font-size: 14px;
+    font-style: italic;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .github-stats-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .stats-card {
+        padding: 0.75rem;
+    }
+
+    .stats-card.contribution-graph-card {
+        padding: 1rem;
+    }
+
+    .contribution-graph h2 {
+        font-size: 16px;
+        margin-left: 0;
+        margin-top: 0;
+        padding-bottom: 8px;
+    }
+
+    .contribution-day {
+        width: 7px;
+        height: 7px;
+    }
+
+    .day-label {
+        height: 7px;
+        font-size: 8px;
+    }
+
+    .months-container {
+        grid-template-columns: repeat(53, 7px);
+        gap: 2px;
+        padding-left: 24px;
+        margin-bottom: 6px;
+    }
+
+    .month-label {
+        font-size: 10px;
+    }
+
+    .contribution-grid {
+        gap: 2px;
+    }
+
+    .week-column {
+        gap: 2px;
+    }
+
+    .contribution-grid-container {
+        gap: 5px;
+    }
+
+    .days-labels {
+        width: 22px;
+        gap: 2px;
+    }
+
+    .contribution-legend {
+        margin-top: 12px;
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .legend-box {
+        width: 10px;
+        height: 10px;
+    }
+
+    .recent-commit-card {
+        padding: 1rem;
+    }
+
+    .commit-header h3 {
+        font-size: 14px;
+    }
+
+    .commit-message {
+        font-size: 14px;
+    }
+
+    .commit-details {
+        font-size: 12px;
+    }
+}

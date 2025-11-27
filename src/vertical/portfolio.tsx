@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type JSX } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Portfolio.css';
 import ContactWindow from './windows/contact';
 import SkillsWindow from './windows/skills';
@@ -7,15 +7,12 @@ import TitleWindow from './windows/title';
 import AboutWindow from './windows/about';
 
 import CookieWindow from './windows/cookie';
-import FallingCookieSection from './FallingCookie/falling_cookie_section';
+import FallingCookieSection from '../FallingCookie/falling_cookie_section';
 import ExperienceWindow from './windows/experience';
 import GitHubStatsWindow from './windows/github_stats';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import Terminal from './components/terminal';
-import HelpWindow from './windows/help';
-import ProjectsPlusWindow from './windows/projects_plus';
+import '../index.css'
 
 
 
@@ -25,8 +22,6 @@ import ProjectsPlusWindow from './windows/projects_plus';
 const Portfolio = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCookieWindowOpen, setIsCookieWindowOpen] = useState(false);
-  const [currentWindow, setCurrentWindow] = useState<JSX.Element>(<TitleWindow />);
-  const [currentCommand, setCurrentCommand] = useState('whoami');
 
 
 
@@ -89,69 +84,37 @@ const Portfolio = () => {
 
   }, []);
 
-  const enterCommand = (command: string) => {
-
-
-    switch (command.toLowerCase()) {
-      case 'about':
-        setCurrentWindow(<AboutWindow />);
-        break;
-      case 'projects':
-        setCurrentWindow(<ProjectsWindow />);
-        break;
-      case 'projects +':
-        setCurrentWindow(<ProjectsPlusWindow />);
-        break;
-      case 'skills':
-        setCurrentWindow(<SkillsWindow />);
-        break;
-      case 'experience':
-        setCurrentWindow(<ExperienceWindow />);
-        break;
-      case 'contact':
-        setCurrentWindow(<ContactWindow />);
-        break;
-      case 'github':
-        setCurrentWindow(<GitHubStatsWindow />);
-        break;
-      case 'whoami':
-        setCurrentWindow(<TitleWindow />);
-        break;
-      case 'resume':
-        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel%20Kemme%20Nash's%20Resume%202025.pdf?alt=media", "_blank");
-        break;
-      case 'help':
-        setCurrentWindow(<HelpWindow />);
-        break;
-      case 'open cookieclicker':
-        console.log("Opening Cookie Clicker...");
-
-        setIsCookieWindowOpen(true);
-        break;
-      default:
-        return false;
-
-
-    }
-    if (command != 'open CookieClicker') {
-      setCurrentCommand(command);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    return true
-  }
-
-
-
+  const handleTerminalButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // const target = e.target as HTMLElement;
+    // if (target.classList.contains('terminal-button')) {
+    //   target.style.transform = 'scale(0.9)';
+    //   setTimeout(() => {
+    //     target.style.transform = 'scale(1)';
+    //   }, 150);
+    // }
+  };
 
   return (
     <div className="portfolio">
 
       <div className="terminal-container">
-        <Terminal command={currentCommand} enterCommand={enterCommand} isFocused={!isCookieWindowOpen}>
-          {currentWindow}
+        {/* Main Terminal Window */}
+        <TitleWindow handleTerminalButtonClick={handleTerminalButtonClick} />
+        <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
+        {/* Experience Terminal */}
+        <ExperienceWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
-        </Terminal>
+        {/* Projects Terminal */}
+        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
 
+        {/* Skills Terminal */}
+        <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
+
+        {/* GitHub Stats Terminal */}
+        <GitHubStatsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
+
+        {/* Contact Terminal */}
+        <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         <div className="footer">
           <p>© 2025 Nathaniel Kemme Nash</p>
@@ -159,7 +122,7 @@ const Portfolio = () => {
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
 
-      {isCookieWindowOpen ? <CookieWindow onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
+      {isCookieWindowOpen ? <CookieWindow handleTerminalButtonClick={handleTerminalButtonClick} onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
     </div>
   );
 };

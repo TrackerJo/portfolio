@@ -1,0 +1,114 @@
+.projects-container {
+    margin-top: 1rem;
+}
+
+.project {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.project:hover {
+    border-color: #58a6ff;
+    transform: translateY(-2px);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1px;
+}
+
+.project h3 {
+    color: #f0f6fc;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-status {
+    background: #238636;
+    color: #f0f6fc;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.project-description {
+    color: #8b949e;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    cursor: default;
+}
+
+.tech-tag {
+    background: #21262d;
+    color: #58a6ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    border: 1px solid #30363d;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+}
+
+.project-link {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.project-link:hover {
+    color: #79c0ff;
+}
+
+.project-link:before {
+    content: "$ ";
+    color: #7ee787;
+}
+
+.project-enter-button {
+    background: transparent;
+    border: none;
+    color: #58a6ff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Add a fade in animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project.fade-in-project {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
