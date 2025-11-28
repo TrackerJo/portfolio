@@ -108,7 +108,7 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
 
     return (
         <div className="sticky-background">
-            <Terminal command={prevCommand} isSticky={true} isFocused={true} enterCommand={(command: string) => {
+            <Terminal command={prevCommand} hideTraditionalPortfolioLink={true} isSticky={true} isFocused={true} commands={[prevCommand == "why" ? "open CookieClicker" : "why", "exit"]} enterCommand={(command: string) => {
 
                 if (command === "why") {
                     setPrevCommand(command);

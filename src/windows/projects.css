@@ -1,5 +1,11 @@
 .projects-container {
     margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 10px;
+    overflow: auto;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .project {

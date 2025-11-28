@@ -9,10 +9,12 @@ type TerminalProps = {
     isSticky?: boolean;
     onClose?: () => void;
     isFocused: boolean;
+    commands?: string[];
+    hideTraditionalPortfolioLink?: boolean;
 
 };
 
-const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocused }: TerminalProps) => {
+const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocused, commands, hideTraditionalPortfolioLink }: TerminalProps) => {
     const [isMobile, setIsMobile] = useState(false);
     const [typingText, setTypingText] = useState('');
     const [enteredInvalidCommand, setEnteredInvalidCommand] = useState<boolean>(false);
@@ -20,9 +22,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
     const [firstExperience, setFirstExperience] = useState(true);
     const windowRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const availableCommands = isSticky ? [
-        command === 'why' ? "open CookieClicker" : "why", "exit"
-    ] : ["whoami", "about", "experience", "projects", "skills", "github", "contact", "resume", "help"]
+    const availableCommands = commands != null ? commands : ["whoami", "about", "experience", "projects", "skills", "github", "contact", "resume", "help"]
 
 
     useEffect(() => {
@@ -86,7 +86,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                     {/* <div className="hero-content"> */}
                     {children}
                     {/* </div> */}
-                    <div style={{ flexShrink: 0 }}>
+                    <div style={{ flexShrink: 0 }} className="input-section">
                         <span className="prompt">nathaniel@portfolio:~$</span>{firstExperience ? <span className="help" onClick={() => {
                             if (!isMobile) return;
                             setFirstExperience(false);
@@ -100,12 +100,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                         {enteredInvalidCommand && <div className="commands">
                             <p>command not found: {invalidCommand}</p></div>}
                         {command == "projects" && <div className="commands">
-                            <p>Hint: Type or click '<span className="available-command" onClick={() => {
-                                enterCommand("projects +");
-                                if (!isMobile)
-                                    setFirstExperience(false);
-                                setTypingText("");
-                            }}>projects +</span>' to view more projects</p>
+                            <p>Hint: Type 'projects (project name)' or click on the project to learn more about it</p>
                         </div>}
                         {<div className="commands">
                             <p>Available commands: {availableCommands.map((e, i) => (<><span className="available-command" onClick={() => {
@@ -113,15 +108,15 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                                 if (!isMobile)
                                     setFirstExperience(false);
                                 setTypingText("");
-                            }}> {e}</span><span>{i < availableCommands.length - 1 ? " |" : ""}</span></>))}</p>
+                            }}> [{e}] </span></>))}</p>
 
                         </div>}
-                        {<div className="commands">
+                        {hideTraditionalPortfolioLink == null || !hideTraditionalPortfolioLink ? <div className="commands">
                             <p>Tap <span className="link" onClick={() => {
-                                open(window.location.href + "Vertical/")
+                                open(window.location.href + "vertical.html")
                             }}>here</span> to view my more traditional portfolio</p>
 
-                        </div>}
+                        </div> : null}
                     </div>
                 </div>
             </div>

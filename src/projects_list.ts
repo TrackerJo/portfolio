@@ -1,0 +1,141 @@
+import Deckly from "./assets/projects/deckly.png";
+import Javaish from "./assets/projects/ProfessorJavaish.png";
+import ShiftMate from "./assets/projects/shiftmate.png";
+import CampusConnect from "./assets/projects/campusConnect.png";
+import Snippets from "./assets/projects/snippets.png";
+import ProjectLog from "./assets/projects/projectlog.png";
+import HTMLRefactor from "./assets/projects/htmlrefactor.png";
+import RobotMailSender from "./assets/projects/robotMail.png";
+import DecklyDemo from "./assets/projects/deckly_demo.mp4";
+import JavaishDemo from "./assets/projects/javaish_demo.mp4";
+import ShiftMateDemo from "./assets/projects/shiftmate_demo.mp4";
+import CampusConnectDemo from "./assets/projects/campus_connect_demo.mp4";
+import SnippetsDemo from "./assets/projects/snippets_demo.mp4";
+
+
+export interface Project {
+    title: string;
+    subtitle: string;
+    status: string;
+    description: string[];
+    technologies: string[];
+    links: { label: string; href: string }[];
+    icon: string;
+    demo?: string;
+}
+
+export const projects: Project[] = [
+
+    {
+        title: 'Deckly',
+        subtitle: 'Bluetooth & Online Card Game Platform',
+        status: 'ACTIVE',
+        description: ['Enables real-time multiplayer gameplay using a client-server Bluetooth LE architecture for offline local play.', 'Connects clients to a host device over Bluetooth and supports online matchmaking via Firebase backend.', 'AI opponents provide solo play.', 'Responsive UI and minimal latency for a smooth gameplay experience.'],
+        technologies: ['Dart (Flutter)', 'Firebase', 'Bluetooth LE'],
+        links: [
+            { label: 'app', href: 'https://apps.apple.com/us/app/deckly-cards-with-friends/id6746527909' },
+            { label: 'github', href: 'https://github.com/TrackerJo/deckly' },
+            // { label: 'docs', href: '#' }
+        ],
+        icon: Deckly,
+        demo: DecklyDemo
+    },
+    {
+        title: 'Javaish',
+        subtitle: 'A Custom Programming Language for Beginners',
+        status: 'FEATURED',
+        description: ['A hand made programming language that is a mix of popular programming languages and English.', 'Designed to help beginners learn to code, with a focus on simplicity and readability.', 'Alongside a custom compiler, it includes a web-based IDE with syntax highlighting, code completion, and a custom line-by-line debugger.'],
+        technologies: ['Java', 'React.js', 'TeaVM'],
+        links: [
+            { label: 'IDE', href: 'https://trackerjo.github.io/ProfessorJavaish/    ' },
+            { label: 'github', href: 'https://github.com/TrackerJo/Javaish' },
+            { label: 'slideshow', href: 'https://docs.google.com/presentation/d/1cWa6pa6btzCKTbh4yDYVNZGC_aGPY99N2ixCo83qcX8/edit?usp=sharing' },
+            { label: 'research paper', href: 'https://pdfhost.io/v/Dq6nbqQG8X_Javaish_Research_Paper' }
+        ],
+        icon: Javaish,
+        demo: JavaishDemo
+    },
+    {
+        title: 'ShiftMate',
+        subtitle: 'Employee Scheduling Made Simple',
+        status: 'SaaS',
+        description: ['Simplifies employee scheduling with a real-time shift management system built using Flutter and Firebase.', 'Supports manager-assigned shifts, employee availability tracking, and syncs with Google Calendar.', 'Real-time updates and notifications ensure teams stay informed.', 'Intuitive UI and scalable backend architecture for teams of any size.'],
+        technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Calendar API', 'Google OAuth'],
+        links: [
+            { label: 'product', href: 'https://trackerjo.github.io/ShiftMate/' },
+            // { label: 'docs', href: '#' }
+        ],
+        icon: ShiftMate,
+        demo: ShiftMateDemo
+    },
+    {
+        title: 'Campus Connect',
+        subtitle: 'High School Student Engagement Platform',
+        status: 'SaaS',
+        description: ['Unifies scheduling and activity management for students, teachers, and parents.', 'Students manage activities, commutes, and opportunities.', 'Teachers create synced schedules and communicate in-app.', 'Parents track their child’s activities—all with real-time communication and easy calendar integration.'],
+        technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud', 'Google Maps API', 'React.ts'],
+        links: [
+            { label: 'product', href: 'https://campusconnects.net/' },
+            // { label: 'github', href: '#' },
+            // { label: 'docs', href: '#' }
+        ],
+        icon: CampusConnect,
+        demo: CampusConnectDemo
+    },
+    {
+        title: 'Snippets',
+        subtitle: 'A Social Media App for Meaningful Conversations',
+        status: 'First App',
+        description: ['A social media app designed to spark meaningful conversations through random daily questions.', 'Users answer prompts before viewing their friends’ responses, encouraging authentic sharing and thoughtful discussion.', 'With features like anonymous weekly questions and public snippet contests, Snippets reimagines social media as a tool for connection—not consumption.'],
+        technologies: ['Dart (Flutter)', 'Firebase', 'Google Cloud'],
+        links: [
+            { label: 'app', href: 'https://us-central1-snippets2024.cloudfunctions.net/updateLink' },
+        ],
+        icon: Snippets,
+        demo: SnippetsDemo
+    },
+    {
+        title: 'Project Log',
+        subtitle: 'A VSCode Extension for Project & Task Management',
+        status: 'Open Source',
+        description: ['A custom built VSCode extension that helps you manage your projects and tasks.', 'It allows you to add project specific tasks and resources and has a built-in timer with automatic timeout detection to help you track your time spent on each project.'],
+        technologies: ['TypeScript', 'VSCode API', 'CSS', 'HTML'],
+        links: [
+            { label: 'extension', href: 'https://marketplace.visualstudio.com/items?itemName=TrackerJo.project-log' },
+            {
+                label: 'github', href: 'https://github.com/TrackerJo/project-log'
+            }
+        ],
+        icon: ProjectLog
+    },
+    {
+        title: 'HTML Refactor',
+        subtitle: 'A VSCode Extension for Refactoring HTML & CSS',
+        status: 'Open Source',
+        description: ['A VSCode extension that helps you keep track of and refactor class and id names in your HTML and CSS files.', 'It allows you to rename classes and ids in your HTML and CSS files, and automatically updates all references to the renamed class or id.', 'It also adds classes and ids to VSCode’s IntelliSense for HTML and CSS.'],
+        technologies: ['TypeScript', 'VSCode API', 'CSS', 'HTML'],
+        links: [
+            { label: 'extension', href: 'https://marketplace.visualstudio.com/items?itemName=TrackerJo.html-refactoring' },
+            { label: 'github', href: 'https://github.com/TrackerJo/html-refactoring' }
+        ],
+        icon: HTMLRefactor
+
+    },
+    {
+        title: 'Robot Mail Sender',
+        subtitle: 'A Custom Solution for Sending Photos taken by a Robot',
+        status: 'Robot',
+        description: ['A custom solution for sending photos taken by a robot.', 'It uses SFTP and SSH to securely transfer files from the robot to a server, and then the servers hosts a simple web interface to get the user’s email and send the photos via SMTP.', 'This was desgined as a marketing tool for a High School\'s Computer Science program, allowing students to send photos taken by a robot to their parents.'],
+        technologies: ['Python', 'SMTP', 'SFTP', 'SSH', 'HTTP', 'HTML', 'CSS'],
+        links: [
+
+            {
+                label: 'github', href: 'https://github.com/TrackerJo/NAOMailServer'
+
+            }
+        ],
+        icon: RobotMailSender
+    }
+
+
+];

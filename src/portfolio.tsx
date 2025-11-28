@@ -16,8 +16,8 @@ import './index.css'
 import Terminal from './components/terminal';
 import HelpWindow from './windows/help';
 import ProjectsPlusWindow from './windows/projects_plus';
-
-
+import ProjectInfoWindow from './windows/project_info';
+import type { Project } from './projects_list';
 
 
 
@@ -27,6 +27,9 @@ const Portfolio = () => {
   const [isCookieWindowOpen, setIsCookieWindowOpen] = useState(false);
   const [currentWindow, setCurrentWindow] = useState<JSX.Element>(<TitleWindow />);
   const [currentCommand, setCurrentCommand] = useState('whoami');
+
+  const [viewingProject, setViewingProject] = useState<boolean>(false);
+  const [selectedProject, setSelectedProject] = useState<Project>();
 
 
 
@@ -97,10 +100,16 @@ const Portfolio = () => {
         setCurrentWindow(<AboutWindow />);
         break;
       case 'projects':
-        setCurrentWindow(<ProjectsWindow />);
+        setCurrentWindow(<ProjectsWindow onClick={(project) => {
+          setSelectedProject(project);
+          setViewingProject(true);
+        }} />);
         break;
       case 'projects +':
-        setCurrentWindow(<ProjectsPlusWindow />);
+        setCurrentWindow(<ProjectsPlusWindow onClick={(project) => {
+          setSelectedProject(project);
+          setViewingProject(true);
+        }} />);
         break;
       case 'skills':
         setCurrentWindow(<SkillsWindow />);
@@ -118,7 +127,7 @@ const Portfolio = () => {
         setCurrentWindow(<TitleWindow />);
         break;
       case 'resume':
-        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel%20Kemme%20Nash's%20Resume%202025.pdf?alt=media", "_blank");
+        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel_Kemme_Nash_s_Resume_2025.pdf?alt=media&token=2fed3036-0576-4a72-9d77-00c53ebc1ddf", "_blank");
         break;
       case 'help':
         setCurrentWindow(<HelpWindow />);
@@ -129,6 +138,21 @@ const Portfolio = () => {
         setIsCookieWindowOpen(true);
         break;
       default:
+        const lowerCommandSplit = command.toLowerCase().split(" ");
+        if (lowerCommandSplit[0] === "projects" && lowerCommandSplit.length > 1) {
+          const projectName = lowerCommandSplit.slice(1).join(" ");
+          const allProjects: Project[] = [...(selectedProject ? [selectedProject] : []), ...(selectedProject ? [] : [])];
+          import('./projects_list').then(({ projects }) => {
+            const foundProject = projects.find(p => p.title.toLowerCase() === projectName);
+            if (foundProject) {
+              setSelectedProject(foundProject);
+              setViewingProject(true);
+              return true;
+            }
+            return false;
+
+          });
+        }
         return false;
 
 
@@ -144,10 +168,10 @@ const Portfolio = () => {
 
 
   return (
-    <div className="portfolio">
+    <div className={"portfolio " + (isCookieWindowOpen || viewingProject ? "no-scroll" : "")}>
 
       <div className="terminal-container">
-        <Terminal command={currentCommand} enterCommand={enterCommand} isFocused={!isCookieWindowOpen}>
+        <Terminal command={currentCommand} enterCommand={enterCommand} isFocused={!isCookieWindowOpen && !viewingProject} >
           {currentWindow}
 
         </Terminal>
@@ -158,8 +182,13 @@ const Portfolio = () => {
         </div>
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
-
+      {viewingProject && selectedProject ?
+        <ProjectInfoWindow project={selectedProject} onClose={() => {
+          setSelectedProject(undefined);
+          setViewingProject(false);
+        }} /> : null}
       {isCookieWindowOpen ? <CookieWindow onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
+
     </div>
   );
 };

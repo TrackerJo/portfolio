@@ -1,0 +1,67 @@
+.project-tile {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+    transition: border-color 0.3s ease;
+    width: 250px;
+}
+
+.project-tile:hover {
+    border-color: #58a6ff;
+}
+
+.project-tile h3 {
+    color: #58a6ff;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+
+.project-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.project-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px;
+
+    /* border: 2px solid black; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+
+}
+
+.project-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+
+}
+
+.project-icon.recruitabl img {
+    background-color: black;
+}
+
+.project-tile:hover .project-icon {
+    transform: scale(1.05);
+}
+
+.project-name {
+    color: #7ee787;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+
+}
