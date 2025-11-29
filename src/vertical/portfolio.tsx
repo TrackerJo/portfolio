@@ -13,6 +13,8 @@ import GitHubStatsWindow from './windows/github_stats';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../index.css'
+import ProjectInfoWindow from './windows/project_info';
+import type { Project } from '../projects_list';
 
 
 
@@ -22,6 +24,8 @@ import '../index.css'
 const Portfolio = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCookieWindowOpen, setIsCookieWindowOpen] = useState(false);
+  const [viewingProject, setViewingProject] = useState<boolean>(false);
+  const [selectedProject, setSelectedProject] = useState<Project>();
 
 
 
@@ -105,7 +109,10 @@ const Portfolio = () => {
         <ExperienceWindow handleTerminalButtonClick={handleTerminalButtonClick} />
 
         {/* Projects Terminal */}
-        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
+        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} onProjectClick={(project) => {
+          setSelectedProject(project);
+          setViewingProject(true);
+        }} />
 
         {/* Skills Terminal */}
         <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
@@ -121,7 +128,13 @@ const Portfolio = () => {
         </div>
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
-
+      {
+        viewingProject && selectedProject ?
+          <ProjectInfoWindow project={selectedProject} onClose={() => {
+            setSelectedProject(undefined);
+            setViewingProject(false);
+          }} /> : null
+      }
       {isCookieWindowOpen ? <CookieWindow handleTerminalButtonClick={handleTerminalButtonClick} onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
     </div>
   );

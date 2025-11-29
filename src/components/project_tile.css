@@ -5,7 +5,7 @@
     padding: 1rem;
     text-align: center;
     transition: border-color 0.3s ease;
-    width: 250px;
+    width: 240px;
 }
 
 .project-tile:hover {
