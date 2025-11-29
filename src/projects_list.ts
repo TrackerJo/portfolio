@@ -11,6 +11,8 @@ import JavaishDemo from "./assets/projects/javaish_demo.mp4";
 import ShiftMateDemo from "./assets/projects/shiftmate_demo.mp4";
 import CampusConnectDemo from "./assets/projects/campus_connect_demo.mp4";
 import SnippetsDemo from "./assets/projects/snippets_demo.mp4";
+import ProjectLogDemo from "./assets/projects/project_log_demo.webm";
+import HTMLRefactorDemo from "./assets/projects/html_refactor_demo.webm";
 
 
 export interface Project {
@@ -106,7 +108,8 @@ export const projects: Project[] = [
                 label: 'github', href: 'https://github.com/TrackerJo/project-log'
             }
         ],
-        icon: ProjectLog
+        icon: ProjectLog,
+        demo: ProjectLogDemo
     },
     {
         title: 'HTML Refactor',
@@ -118,7 +121,8 @@ export const projects: Project[] = [
             { label: 'extension', href: 'https://marketplace.visualstudio.com/items?itemName=TrackerJo.html-refactoring' },
             { label: 'github', href: 'https://github.com/TrackerJo/html-refactoring' }
         ],
-        icon: HTMLRefactor
+        icon: HTMLRefactor,
+        demo: HTMLRefactorDemo
 
     },
     {

@@ -53,7 +53,9 @@
     overflow: hidden;
 }
 
-.project-demo-image.project-javaish {
+.project-demo-image.project-javaish,
+.project-demo-image.project-project-log,
+.project-demo-image.project-html-refactor {
     height: unset;
 }
 

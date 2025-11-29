@@ -30,6 +30,7 @@ const Portfolio = () => {
 
   const [viewingProject, setViewingProject] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<Project>();
+  const [closedWindow, setClosedWindow] = useState<boolean>(false);
 
 
 
@@ -171,10 +172,16 @@ const Portfolio = () => {
     <div className={"portfolio " + (isCookieWindowOpen || viewingProject ? "no-scroll" : "")}>
 
       <div className="terminal-container">
-        <Terminal command={currentCommand} enterCommand={enterCommand} isFocused={!isCookieWindowOpen && !viewingProject} >
+        {!closedWindow ? <Terminal onClose={() => {
+          setClosedWindow(true);
+          setTimeout(() => {
+            setClosedWindow(false);
+          }, 1000)
+        }} command={currentCommand} enterCommand={enterCommand} isFocused={!isCookieWindowOpen && !viewingProject} >
           {currentWindow}
 
-        </Terminal>
+        </Terminal> : <p style={{ textAlign: 'center' }}>Oops! You aren't supposed to see this!</p>
+        }
 
 
         <div className="footer">
@@ -182,14 +189,16 @@ const Portfolio = () => {
         </div>
       </div>
       <canvas ref={canvasRef} className="matrix-canvas" />
-      {viewingProject && selectedProject ?
-        <ProjectInfoWindow project={selectedProject} onClose={() => {
-          setSelectedProject(undefined);
-          setViewingProject(false);
-        }} /> : null}
+      {
+        viewingProject && selectedProject ?
+          <ProjectInfoWindow project={selectedProject} onClose={() => {
+            setSelectedProject(undefined);
+            setViewingProject(false);
+          }} /> : null
+      }
       {isCookieWindowOpen ? <CookieWindow onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
 
-    </div>
+    </div >
   );
 };
 
