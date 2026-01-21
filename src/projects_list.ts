@@ -24,6 +24,8 @@ export interface Project {
     links: { label: string; href: string }[];
     icon: string;
     demo?: string;
+    demoWidth?: number;
+    demoHeight?: number;
 }
 
 export const projects: Project[] = [
@@ -40,7 +42,9 @@ export const projects: Project[] = [
             // { label: 'docs', href: '#' }
         ],
         icon: Deckly,
-        demo: DecklyDemo
+        demo: DecklyDemo,
+        demoHeight: 1288,
+        demoWidth: 750,
     },
     {
         title: 'Javaish',
@@ -55,7 +59,9 @@ export const projects: Project[] = [
             { label: 'research paper', href: 'https://pdfhost.io/v/Dq6nbqQG8X_Javaish_Research_Paper' }
         ],
         icon: Javaish,
-        demo: JavaishDemo
+        demo: JavaishDemo,
+        demoHeight: 225,
+        demoWidth: 361,
     },
     {
         title: 'ShiftMate',
@@ -68,7 +74,9 @@ export const projects: Project[] = [
             // { label: 'docs', href: '#' }
         ],
         icon: ShiftMate,
-        demo: ShiftMateDemo
+        demo: ShiftMateDemo,
+        demoHeight: 1294,
+        demoWidth: 750,
     },
     {
         title: 'Campus Connect',
@@ -82,7 +90,9 @@ export const projects: Project[] = [
             // { label: 'docs', href: '#' }
         ],
         icon: CampusConnect,
-        demo: CampusConnectDemo
+        demo: CampusConnectDemo,
+        demoWidth: 750,
+        demoHeight: 1292
     },
     {
         title: 'Snippets',
@@ -94,7 +104,9 @@ export const projects: Project[] = [
             { label: 'app', href: 'https://us-central1-snippets2024.cloudfunctions.net/updateLink' },
         ],
         icon: Snippets,
-        demo: SnippetsDemo
+        demo: SnippetsDemo,
+        demoWidth: 404,
+        demoHeight: 696,
     },
     {
         title: 'Project Log',

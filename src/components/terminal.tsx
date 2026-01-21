@@ -14,6 +14,7 @@ type TerminalProps = {
 
 };
 
+
 const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocused, commands, hideTraditionalPortfolioLink }: TerminalProps) => {
     const [isMobile, setIsMobile] = useState(false);
     const [typingText, setTypingText] = useState('');
@@ -91,7 +92,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                             if (!isMobile) return;
                             setFirstExperience(false);
                             inputRef.current?.focus()
-                        }}>{isMobile ? "Tap here to type in a command or tap on an available command" : "Start typing to enter a command or click on an availble command"}</span> : isMobile ? <><input ref={inputRef} autoFocus type="text" name="coommand" id="" className="command-input" onChange={(e) => setTypingText(e.target.value)} /><button className="enter-button" onClick={() => {
+                        }}>{isMobile ? "Tap here to type in a command or tap on an available command" : "Start typing to enter a command or click on an available command"}</span> : isMobile ? <><input ref={inputRef} autoFocus type="text" name="coommand" id="" className="command-input" onChange={(e) => setTypingText(e.target.value)} /><button className="enter-button" onClick={() => {
                             enterCommand(typingText);
                             setTypingText('');
                             setFirstExperience(true);
@@ -103,12 +104,13 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                             <p>Hint: Type 'projects (project name)' or click on the project to learn more about it</p>
                         </div>}
                         {<div className="commands">
-                            <p>Available commands: {availableCommands.map((e, i) => (<><span className="available-command" onClick={() => {
+                            <p>Available commands: {availableCommands.map((e, i) => (<a className="available-command" href={`/application=${e}`} onClick={(event) => {
+                                event.preventDefault();
                                 enterCommand(e);
                                 if (!isMobile)
                                     setFirstExperience(false);
                                 setTypingText("");
-                            }}> [{e}] </span></>))}</p>
+                            }}> [{e}] </a>))}</p>
 
                         </div>}
                         {hideTraditionalPortfolioLink == null || !hideTraditionalPortfolioLink ? <div className="commands">

@@ -13,7 +13,7 @@ import "./projects.css";
 
 const ProjectsWindow = ({ onClick }: { onClick: (project: Project) => void }) => {
 
-   
+
 
 
 

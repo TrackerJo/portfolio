@@ -45,7 +45,7 @@ const ProjectInfoWindow = ({ onClose, project }: { onClose: () => void, project:
                     </div>
                     {project.demo && <div className="hero-demo">
                         <div className={"project-demo-image project-" + project.title.replace(/\s+/g, '-').toLowerCase()}>
-                            <video src={project.demo} autoPlay loop muted />
+                            <video src={project.demo} autoPlay loop muted width={project.demoWidth} height={project.demoHeight} />
 
 
                         </div>

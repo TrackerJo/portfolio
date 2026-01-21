@@ -16,6 +16,7 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
 
 
     const [prevCommand, setPrevCommand] = useState("open CookieClicker");
+    const [availableCommands, setAvailableCommands] = useState<string[]>(["why", "open CookieClicker", "save", "exit"]);
 
     const [viewingWhy, setViewingWhy] = useState(false);
 
@@ -27,11 +28,12 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
         { name: "Cursor", price: 15, backgroundPosition: [0, 0], cps: 0.1, count: 0 },
         { name: "Grandma", price: 100, backgroundPosition: [0, -64], cps: 1, count: 0 },
         { name: "Farm", price: 1100, backgroundPosition: [0, -192], cps: 8, count: 0 },
-        { name: "Factory", price: 12000, backgroundPosition: [0, -256], cps: 47, count: 0 },
-        { name: "Mine", price: 130000, backgroundPosition: [0, -320], cps: 260, count: 0 },
-        { name: "Shipment", price: 1400000, backgroundPosition: [0, -384], cps: 1400, count: 0 },
+        { name: "Mine", price: 12000, backgroundPosition: [0, -256], cps: 47, count: 0 },
+        { name: "Factory", price: 130000, backgroundPosition: [0, -320], cps: 260, count: 0 },
+        { name: "Bank", price: 1400000, backgroundPosition: [0, -384], cps: 1400, count: 0 },
     ]);
     const [cookiesClickText, setCookiesClickText] = useState<ClickTextProps[]>([]);
+
     const [cookiesClick, setCookiesClick] = useState<ClickCookieProps[]>([]);
     const cookieHeroRef = useRef<HTMLDivElement>(null);
     const whyHeroRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,14 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        if (prevCommand === "why") {
+            setAvailableCommands(["open CookieClicker", "exit"]);
+        } else if (prevCommand === "open CookieClicker") {
+            setAvailableCommands(["why", "save", "wipe", "exit"]);
+        }
+    }, [prevCommand]);
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -56,6 +66,40 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
     }, [cookiesPerSecond]);
 
 
+    const saveToLocalStorage = () => {
+        const gameState = {
+            cookies,
+            cookiesPerSecond,
+            upgrades,
+        };
+        localStorage.setItem('cookieClickerGameState', JSON.stringify(gameState));
+    };
+
+    const loadFromLocalStorage = () => {
+        const savedState = localStorage.getItem('cookieClickerGameState');
+        if (savedState) {
+            const gameState = JSON.parse(savedState);
+            setCookies(gameState.cookies);
+            setCookiesPerSecond(gameState.cookiesPerSecond);
+            setUpgrades(gameState.upgrades);
+           
+        }
+    };
+
+    useEffect(() => {
+        loadFromLocalStorage();
+    }, []);
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            saveToLocalStorage();
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [cookies, cookiesPerSecond, upgrades]);
 
 
     function onCookieClick(e: React.MouseEvent<HTMLImageElement>) {
@@ -108,28 +152,63 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
 
     return (
         <div className="sticky-background">
-            <Terminal command={prevCommand} hideTraditionalPortfolioLink={true} isSticky={true} isFocused={true} commands={[prevCommand == "why" ? "open CookieClicker" : "why", "exit"]} enterCommand={(command: string) => {
+            <Terminal command={prevCommand} hideTraditionalPortfolioLink={true} isSticky={true} isFocused={true} commands={availableCommands} enterCommand={(command: string) => {
+                switch (command) {
+                    case "why":
+                        setPrevCommand(command);
 
-                if (command === "why") {
-                    setPrevCommand(command);
+                        setViewingWhy(true);
+                        return true;
+                    case "open CookieClicker":
+                        setPrevCommand(command);
 
-                    setViewingWhy(true);
-                } else if (command === "open CookieClicker") {
-                    setPrevCommand(command);
+                        setViewingWhy(false);
+                        return true;
+                    case "save":
+                        setPrevCommand(command);
+                        setTimeout(() => {
+                            console.log("Game saved!");
+                            setPrevCommand("open CookieClicker");
+                        }, 1500);
 
-                    setViewingWhy(false);
-                } else if (command === "exit") {
-                    setPrevCommand(command);
+                        saveToLocalStorage();
+                        return true;
+                    case "wipe":
+                        setPrevCommand(command);
+                        setTimeout(() => {
+                            console.log("Game wiped!");
+                            setPrevCommand("open CookieClicker");
+                        }, 1500);
 
-                    onClose();
-                } else {
-                    return false;
+                        localStorage.removeItem('cookieClickerGameState');
+                        setCookies(0);
+                        setCookiesPerSecond(0);
+                        setUpgrades([
+                            { name: "Cursor", price: 15, backgroundPosition: [0, 0], cps: 0.1, count: 0 },
+                            { name: "Grandma", price: 100, backgroundPosition: [0, -64], cps: 1, count: 0 },
+                            { name: "Farm", price: 1100, backgroundPosition: [0, -192], cps: 8, count: 0 },
+                            { name: "Factory", price: 12000, backgroundPosition: [0, -256], cps: 47, count: 0 },
+                            { name: "Mine", price: 130000, backgroundPosition: [0, -320], cps: 260, count: 0 },
+                            { name: "Shipment", price: 1400000, backgroundPosition: [0, -384], cps: 1400, count: 0 },
+                        ]);
+                        return true;
+                    case "exit":
+                        setPrevCommand(command);
+
+                        onClose();
+                        return true;
+
+                    default:
+                        return false;
                 }
-                return true;
 
-            }} onClose={onClose}>
 
-                {!viewingWhy ?
+            }} onClose={() => {
+                saveToLocalStorage();
+                onClose();
+            }}>
+
+                {prevCommand === "open CookieClicker" ?
                     <div className="hero-content" ref={cookieHeroRef}>
                         <div className="cookie-section">
                             <div className="cookie-info">
@@ -174,7 +253,7 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
 
 
 
-                    : <div className="hero-section" >
+                    : prevCommand == 'why' ? <div className="hero-section" >
 
                         <div className="hero-text" ref={whyHeroRef}>
                             <p>Now, you may be asking why is there Cookie Clicker built in to this mans portfolio? And that's a very reasonable question to ask. The answer is fairly simple. As a kid, I played a lot of Cookie Clicker, so when I learned to code the first thing I wanted to make was Cookie Clicker. And as I started to learn more programming languages, instead of making the traditional ToDo app, I would make Cookie Clicker. So I decided that Cookie Clicker deserved a special place in my portfolio as it helped me learn to code.</p>
@@ -185,7 +264,15 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
 
 
 
-                    </div>}
+                    </div> : prevCommand == 'save' ? <div className="hero-section" >
+                        <div className="hero-text">
+                            <p>Saving game...</p>
+                        </div>
+                    </div> : prevCommand == 'wipe' ? <div className="hero-section" >
+                        <div className="hero-text">
+                            <p>Wiping game...</p>
+                        </div>
+                    </div> : null}
 
 
 

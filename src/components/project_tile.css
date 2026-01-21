@@ -6,6 +6,7 @@
     text-align: center;
     transition: border-color 0.3s ease;
     width: 240px;
+    cursor: pointer;
 }
 
 .project-tile:hover {

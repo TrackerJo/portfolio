@@ -7,7 +7,6 @@ import Cookie from '../assets/cookie.png';
 
 function FallingCookie({ onReachBottom, x, onClick }: { onReachBottom: () => void, x: number, onClick: () => void }) {
 
-
   return (
 
     <div className='fallingText' style={{ left: `${x}vw` }} onAnimationEnd={() => {
