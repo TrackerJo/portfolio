@@ -1,4 +1,6 @@
 import Deckly from "./assets/projects/deckly.png";
+import LayItOut from "./assets/projects/layItOut.png";
+import UPlate from "./assets/projects/uplate.png";
 import Javaish from "./assets/projects/ProfessorJavaish.png";
 import ShiftMate from "./assets/projects/shiftmate.png";
 import CampusConnect from "./assets/projects/campusConnect.png";
@@ -13,6 +15,7 @@ import CampusConnectDemo from "./assets/projects/campus_connect_demo.mp4";
 import SnippetsDemo from "./assets/projects/snippets_demo.mp4";
 import ProjectLogDemo from "./assets/projects/project_log_demo.webm";
 import HTMLRefactorDemo from "./assets/projects/html_refactor_demo.webm";
+import UPlateDemo from "./assets/projects/uplate_demo.mp4";
 
 
 export interface Project {
@@ -29,11 +32,50 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+    {
+        title: 'UPlate',
+        subtitle: 'Smart Meal Planning for Campus Dining',
+        status: 'Published',
+        description: [
+            'A meal planning app built specifically for college students that syncs directly with campus dining hall menus.',
+            'Uses AI-driven recommendations to suggest meals based on fitness goals such as cutting, maintaining, or bulking.',
+            'Supports dietary restrictions including allergies, vegetarian, vegan, halal, and kosher, filtering out foods users cannot eat.',
+            'Users can easily log meals and track nutrition with a built-in food diary.',
+            'Includes searchable and favoritable dining hall items with full nutritional information, helping students make confident food choices.'
+        ],
+        technologies: [
+            'Dart (Flutter)',
+            'Firebase',
+            'Cloud Functions',
+            'REST APIs',
+            'AI / RAG',
+            'Cloudflare'
+        ],
+        links: [
+            { label: 'product', href: 'https://u-plate.com' },
+            // { label: 'github', href: '#' }
+        ],
+        icon: UPlate,
+        demo: UPlateDemo,
+        demoWidth: 720,
+        demoHeight: 1556
+    },
+    {
+        title: 'LayItOut',
+        subtitle: 'Venue Design & Layout Website',
+        status: 'Freelance',
+        description: ['Create custom venue layouts quickly and easily with LayItOut, a web app that allows companies to create venue templates to send to clients to desing the layout for their event', 'Features drag-and-drop functionality, customizable furniture and decor items, and real-time booth maps for events like a farmers market'],
+        technologies: ['React.ts', 'Firebase'],
+        links: [
+            { label: 'website', href: 'https://lay-it-out.com/' },
+        ],
+        icon: LayItOut,
 
+    },
     {
         title: 'Deckly',
         subtitle: 'Bluetooth & Online Card Game Platform',
-        status: 'ACTIVE',
+        status: 'App Store',
         description: ['Enables real-time multiplayer gameplay using a client-server Bluetooth LE architecture for offline local play.', 'Connects clients to a host device over Bluetooth and supports online matchmaking via Firebase backend.', 'AI opponents provide solo play.', 'Responsive UI and minimal latency for a smooth gameplay experience.'],
         technologies: ['Dart (Flutter)', 'Firebase', 'Bluetooth LE'],
         links: [
