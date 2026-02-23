@@ -115,7 +115,7 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                         </div>}
                         {hideTraditionalPortfolioLink == null || !hideTraditionalPortfolioLink ? <div className="commands">
                             <p>Tap <span className="link" onClick={() => {
-                                open(window.location.href + "vertical.html")
+                                window.open("https://nathaniel.kemmenash.com/vertical.html", "_blank");
                             }}>here</span> to view my more traditional portfolio</p>
 
                         </div> : null}

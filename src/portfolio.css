@@ -81,7 +81,7 @@ body:has(.no-scroll) {
 .typing-animation {
     padding-left: 2px;
     border-right: 2px solid #7ee787;
-    animation: blink 1s infinite;
+
 }
 
 @keyframes blink {
