@@ -18,6 +18,8 @@ import HelpWindow from './windows/help';
 import ProjectsPlusWindow from './windows/projects_plus';
 import ProjectInfoWindow from './windows/project_info';
 import type { Project } from './projects_list';
+import PodcastWindow from './windows/podcasts';
+import { projects } from './constants';
 
 type Application = 'about' | 'projects' | 'projects_plus' | 'skills' | 'experience' | 'contact' | 'github' | 'title' | 'help';
 
@@ -55,37 +57,6 @@ const Portfolio = () => {
   const [viewingProject, setViewingProject] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<Project>();
   const [closedWindow, setClosedWindow] = useState<boolean>(false);
-
-
-  const Application = (application: Application) => {
-    switch (application) {
-      case 'about':
-        return <AboutWindow />;
-      case 'projects':
-        return <ProjectsWindow onClick={(project) => {
-          setSelectedProject(project);
-          setViewingProject(true);
-        }} />;
-      case 'projects_plus':
-        return <ProjectsPlusWindow onClick={(project) => {
-          setSelectedProject(project);
-          setViewingProject(true);
-        }} />;
-      case 'skills':
-        return <SkillsWindow />;
-      case 'experience':
-        return <ExperienceWindow />;
-      case 'contact':
-        return <ContactWindow />;
-      case 'github':
-        return <GitHubStatsWindow />;
-      case 'title':
-        return <TitleWindow />;
-      case 'help':
-        return <HelpWindow />;
-    }
-  }
-
 
 
 
@@ -152,10 +123,10 @@ const Portfolio = () => {
   })
 
   const titleCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).replace('_', ' ');
-  const switchApplication = (application: Application) => {
-    history.pushState({ application }, titleCase(application), `?application=${application}`);
-    setCurrentApplication(application);
-  }
+  // const switchApplication = (application: Application) => {
+  //   history.pushState({ application }, titleCase(application), `?application=${application}`);
+  //   setCurrentApplication(application);
+  // }
 
   const enterCommand = (command: string, { pushState = true }: { pushState?: boolean } = {}) => {
     switch (command.toLowerCase()) {
@@ -200,6 +171,11 @@ const Portfolio = () => {
           history.pushState({ application: "github" }, "GitHub Stats", "?application=github");
         setCurrentWindow(<GitHubStatsWindow />);
         break;
+      case 'podcasts':
+        if (pushState)
+          history.pushState({ application: "podcasts" }, "Podcasts", "?application=podcasts");
+        setCurrentWindow(<PodcastWindow />);
+        break;
       case 'whoami':
         if (pushState)
           history.pushState({ application: "whoami" }, "whoami", "?application=whoami");
@@ -219,11 +195,12 @@ const Portfolio = () => {
         setIsCookieWindowOpen(true);
         break;
       default:
-        const lowerCommandSplit = command.toLowerCase().split(" ");
-        if (lowerCommandSplit[0] === "projects" && lowerCommandSplit.length > 1) {
-          const projectName = lowerCommandSplit.slice(1).join(" ");
-          const allProjects: Project[] = [...(selectedProject ? [selectedProject] : []), ...(selectedProject ? [] : [])];
-          import('./projects_list').then(({ projects }) => {
+        {
+          const lowerCommandSplit = command.toLowerCase().split(" ");
+          if (lowerCommandSplit[0] === "projects" && lowerCommandSplit.length > 1) {
+            const projectName = lowerCommandSplit.slice(1).join(" ");
+            const allProjects: Project[] = [...(selectedProject ? [selectedProject] : []), ...(selectedProject ? [] : [])];
+
             const foundProject = projects.find(p => p.title.toLowerCase() === projectName);
             if (foundProject) {
               setSelectedProject(foundProject);
@@ -232,9 +209,10 @@ const Portfolio = () => {
             }
             return false;
 
-          });
+
+          }
+          return false;
         }
-        return false;
 
 
     }
@@ -261,8 +239,6 @@ const Portfolio = () => {
 
         </Terminal> : <p style={{ textAlign: 'center' }}>Oops! You aren't supposed to see this!</p>
         }
-
-
         <div className="footer">
           <p>© 2025 Nathaniel Kemme Nash</p>
         </div>

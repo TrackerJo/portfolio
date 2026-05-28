@@ -1,20 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import './Portfolio.css';
-import ContactWindow from './windows/contact';
-import SkillsWindow from './windows/skills';
-import ProjectsWindow from './windows/projects';
-import TitleWindow from './windows/title';
-import AboutWindow from './windows/about';
 
-import CookieWindow from './windows/cookie';
 import FallingCookieSection from '../FallingCookie/falling_cookie_section';
-import ExperienceWindow from './windows/experience';
-import GitHubStatsWindow from './windows/github_stats';
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../index.css'
-import ProjectInfoWindow from './windows/project_info';
+
 import type { Project } from '../projects_list';
+import AboutWindow from '../windows/about';
+import Terminal from '../components/terminal';
+import TitleWindow from '../windows/title';
+import ExperienceWindow from '../windows/experience';
+import ProjectsWindow from '../windows/projects';
+import ProjectInfoWindow from '../windows/project_info';
+import SkillsWindow from '../windows/skills';
+import GitHubStatsWindow from '../windows/github_stats';
+import ContactWindow from '../windows/contact';
+import CookieWindow from '../windows/cookie';
 
 
 
@@ -103,26 +106,50 @@ const Portfolio = () => {
 
       <div className="terminal-container">
         {/* Main Terminal Window */}
-        <TitleWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-        <AboutWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} />
+        <Terminal isVertical={true} command={'whoami'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+          <TitleWindow />
+        </Terminal>
+        <Terminal isVertical={true} fullText='curl -O https://trackerjo.github.io/resume.pdf' command={'glow about_me.md'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+           <AboutWindow  />
+        </Terminal>
+       
         {/* Experience Terminal */}
-        <ExperienceWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-
+        <Terminal isVertical={true} command={'./experience.sh --list'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+         <ExperienceWindow  />
+        </Terminal>
         {/* Projects Terminal */}
-        <ProjectsWindow handleTerminalButtonClick={handleTerminalButtonClick} listenToEnter={!isCookieWindowOpen} onProjectClick={(project) => {
-          setSelectedProject(project);
-          setViewingProject(true);
-        }} />
-
+        <Terminal isVertical={true} command={'cat projects.json | jq \'.\''} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+          <ProjectsWindow onClick={(project) => {
+            setSelectedProject(project);
+            setViewingProject(true);
+          }} />
+        </Terminal>
         {/* Skills Terminal */}
-        <SkillsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-
+        <Terminal isVertical={true} command={'./skills.sh --list'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+          <SkillsWindow  />
+        </Terminal>
         {/* GitHub Stats Terminal */}
-        <GitHubStatsWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-
+        <Terminal isVertical={true} command={'./github_stats.sh --user TrackerJo'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+          <GitHubStatsWindow  />
+        </Terminal>
         {/* Contact Terminal */}
-        <ContactWindow handleTerminalButtonClick={handleTerminalButtonClick} />
-
+        <Terminal isVertical={true} command={'./contact.sh --channels'} enterCommand={function (command: string): boolean {
+          throw new Error('Function not implemented.');
+        } } isFocused={false} >
+          <ContactWindow  />
+        </Terminal>
         <div className="footer">
           <p>© 2025 Nathaniel Kemme Nash</p>
         </div>
@@ -135,7 +162,7 @@ const Portfolio = () => {
             setViewingProject(false);
           }} /> : null
       }
-      {isCookieWindowOpen ? <CookieWindow handleTerminalButtonClick={handleTerminalButtonClick} onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
+      {isCookieWindowOpen ? <CookieWindow onClose={() => setIsCookieWindowOpen(false)} /> : <FallingCookieSection onCookieClick={() => setIsCookieWindowOpen(true)} />}
     </div>
   );
 };

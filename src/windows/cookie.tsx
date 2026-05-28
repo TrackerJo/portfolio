@@ -65,6 +65,19 @@ const CookieWindow = ({ onClose }: { onClose: () => void }) => {
         return () => clearInterval(interval);
     }, [cookiesPerSecond]);
 
+     useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [onClose]);
+
 
     const saveToLocalStorage = () => {
         const gameState = {

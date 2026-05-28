@@ -173,6 +173,43 @@
     min-height: 0;
     height: 100%;
 }
+.prompt {
+    color: #58a6ff;
+    font-weight: 500;
+    padding-right: 0px;
+}
+
+.command {
+    color: #7ee787;
+    font-weight: 500;
+}
+
+.output {
+    margin: 1rem 0;
+}
+
+.typing-animation {
+    padding-left: 2px;
+    border-right: 2px solid #7ee787;
+
+
+}
+
+.typing-animation.idle {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%,
+    50% {
+        border-color: #7ee787;
+    }
+
+    51%,
+    100% {
+        border-color: transparent;
+    }
+}
 
 @media (max-width: 768px) {
     .commands {

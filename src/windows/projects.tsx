@@ -1,6 +1,7 @@
 
 import ProjectTile from "../components/project_tile";
-import { projects, type Project } from "../projects_list";
+import { projects, type Project } from "../constants";
+
 import "./projects.css";
 
 

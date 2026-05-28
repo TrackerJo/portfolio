@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import "./terminal.css";
 import TerminalButtons from "./terminal_buttons";
+import { availableCommands } from "../constants";
 
 type TerminalProps = {
     command: string;
@@ -11,26 +12,77 @@ type TerminalProps = {
     isFocused: boolean;
     commands?: string[];
     hideTraditionalPortfolioLink?: boolean;
+    isVertical?: boolean;
+    fullText?: string;
 
 };
 
 
-const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocused, commands, hideTraditionalPortfolioLink }: TerminalProps) => {
+const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocused, commands, hideTraditionalPortfolioLink, isVertical = false, fullText }: TerminalProps) => {
     const [isMobile, setIsMobile] = useState(false);
     const [typingText, setTypingText] = useState('');
+    const [animatedCommand, setAnimatedCommand] = useState('');
+    const [hasFinishedTyping, setHasFinishedTyping] = useState(false);
     const [enteredInvalidCommand, setEnteredInvalidCommand] = useState<boolean>(false);
     const [invalidCommand, setInvalidCommand] = useState<string>('false');
     const [firstExperience, setFirstExperience] = useState(true);
+    const [isTypingIdle, setIsTypingIdle] = useState(true);
     const windowRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const availableCommands = commands != null ? commands : ["whoami", "about", "experience", "projects", "skills", "github", "contact", "resume", "help"]
+    const textRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const suggestedCommands = commands ? commands : availableCommands.map(c => (c.command));
 
+
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                } else {
+                    setIsVisible(false);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (textRef.current) {
+            observer.observe(textRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+    useEffect(() => {
+
+        if (hasFinishedTyping) return; // Prevents re-triggering if already finished
+        if (!isVisible && typingText.length == 0) return;
+
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < fullText.length) {
+                setTypingText(fullText.substring(0, i + 1));
+                i++;
+            } else {
+                clearInterval(timer);
+
+                setHasFinishedTyping(true);
+            }
+        }, 100);
+
+
+
+        return () => clearInterval(timer);
+    }, [isVisible]);
 
     useEffect(() => {
 
         //Listen for typing on keyboard
         const handleKeyDown = (e: KeyboardEvent) => {
-
+            setIsTypingIdle(false);
+            setTimeout(() => {
+                setIsTypingIdle(true);
+            }, 500);
             if (e.key.length === 1) {
 
                 setTypingText((prev) => prev + e.key);
@@ -72,7 +124,27 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const handleClick = () => {
 
+        window.open("https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel_Kemme_Nash_s_Resume_2025.pdf?alt=media&token=2fed3036-0576-4a72-9d77-00c53ebc1ddf", "_blank");
+
+    }
+
+    useEffect(() => {
+
+        function handleEnterKeyPress(e: KeyboardEvent) {
+            console.log(typingText, fullText, isVisible);
+            console.log(hasFinishedTyping);
+            if (typingText === fullText && isVisible && hasFinishedTyping && e.key === 'Enter' && isVertical && fullText != null) {
+                handleClick();
+            }
+        }
+
+        if (hasFinishedTyping) {
+            document.addEventListener('keydown', handleEnterKeyPress);
+            return () => document.removeEventListener('keydown', handleEnterKeyPress);
+        }
+    }, [typingText, fullText, isVisible, hasFinishedTyping, isVertical]);
     return (
         <div className={`terminal-window ${isSticky ? "sticky" : ""}`} ref={windowRef}>
             <div className="terminal-header">
@@ -82,11 +154,12 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
             <div className="terminal-content" style={{ display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1, overflow: 'hidden' }}>
                 <div className="hero-section">
                     <div className="output">
-                        <span className="prompt">nathaniel@portfolio:~$</span><span className="command">{command}</span>
+                        <span className="prompt">nathaniel@portfolio:~$ </span><span className="command">{command}</span>
                     </div>
                     {/* <div className="hero-content"> */}
                     {children}
                     {/* </div> */}
+                    {!isVertical ?
                     <div style={{ flexShrink: 0 }} className="input-section">
                         <span className="prompt">nathaniel@portfolio:~$</span>{firstExperience ? <span className="help" onClick={() => {
                             if (!isMobile) return;
@@ -97,14 +170,15 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                             setTypingText('');
                             setFirstExperience(true);
 
-                        }} >↵</button></> : <span className={`command typing-animation`}>{typingText}</span>}
+                        }} >↵</button></> : <span className={`command typing-animation ${isTypingIdle ? 'idle' : ''}`}>{typingText}</span>}
+                        {/* <span className={`command typing-animation ${isTypingIdle ? 'idle' : ''}`}></span> */}
                         {enteredInvalidCommand && <div className="commands">
                             <p>command not found: {invalidCommand}</p></div>}
                         {command == "projects" && <div className="commands">
                             <p>Hint: Type 'projects (project name)' or click on the project to learn more about it</p>
                         </div>}
                         {<div className="commands">
-                            <p>Available commands: {availableCommands.map((e, i) => (<a className="available-command" href={`/application=${e}`} onClick={(event) => {
+                            <p>Available commands: {suggestedCommands.map((e) => (<a className="available-command" href={`/application=${e}`} onClick={(event) => {
                                 event.preventDefault();
                                 enterCommand(e);
                                 if (!isMobile)
@@ -113,13 +187,15 @@ const Terminal = ({ command, children, enterCommand, isSticky, onClose, isFocuse
                             }}> [{e}] </a>))}</p>
 
                         </div>}
-                        {hideTraditionalPortfolioLink == null || !hideTraditionalPortfolioLink ? <div className="commands">
+                        {(hideTraditionalPortfolioLink == null || !hideTraditionalPortfolioLink)  ? <div className="commands">
                             <p>Tap <span className="link" onClick={() => {
-                                window.open("https://nathaniel.kemmenash.com/vertical.html", "_blank");
+                                window.location.href = "/vertical";
                             }}>here</span> to view my more traditional portfolio</p>
 
                         </div> : null}
-                    </div>
+                    </div> : fullText != null && isVertical ? <div className="prompt-section">
+                        <span className="prompt" ref={textRef}>nathaniel@portfolio:~$</span><span className={`command ${hasFinishedTyping ? "" : "typing-animation"}`}>{typingText}</span> {typingText == fullText ? <button className="project-enter-button" onClick={() => handleClick()} >↵</button> : null}
+                    </div> : null}
                 </div>
             </div>
         </div>

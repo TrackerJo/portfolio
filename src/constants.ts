@@ -197,3 +197,65 @@ export const projects: Project[] = [
 
 
 ];
+
+export interface Podcast {
+    title: string;
+    url: string;
+    authors: string[];
+    image: string;
+
+}
+
+export const podcasts: Podcast[] = [
+    {
+        title: "How I Built This",
+        url: "https://open.spotify.com/show/6E709HRH7XaiZrMfgtNCun?si=1b87f885dacf4a68",
+        authors: ["Guy Raz"],
+        image: "https://content.production.cdn.art19.com/images/56/ae/46/57/56ae4657-2aa7-4cfc-8ddf-9be24410d5ed/781b7c7456c4b4d737191d7d009103a65c82794270b41e7e37a4c1fb2eb8b0c9f357d6da20ed4b5c26fc2ffbca054866e0da65a9212969493500399e65e8f90f.jpeg"
+    },
+    {
+        title: "StartUp Podcast",
+        url: "https://open.spotify.com/show/5CnDmMUG0S5bSSw612fs8C?si=361c7399e8fb4b76",
+        authors: ["Gimlet"],
+        image: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/3e/7e/da/3e7eda2d-d968-33c5-fbfa-e68d0f43aae4/mza_17561063681009474062.jpg/600x600bb.webp"
+    },
+    {
+        title: "Founders",
+        url: "https://open.spotify.com/show/7txiovdzPARhjm18NwMUYj?si=ccc02cff28e74d87",
+        authors: ["David Senra"],
+        image: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/71/4f/ed714f67-f095-a4ef-f38e-d8c02300666a/mza_11432355988627368701.jpg/600x600bb.webp"
+    },
+    {
+        title: "Acquired",
+        url: "https://open.spotify.com/show/7Fj0XEuUQLUqoMZQdsLXqp?si=7eb9c7bad8264bfb",
+        authors: ["Ben Gilbert", "David Rosenthal"],
+        image: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/43/c5/fb/43c5fbdf-b302-053a-2704-ba5f74322625/mza_13119989780540450831.jpg/600x600bb.webp"
+    }
+];
+
+export interface Command {
+    command: string;
+    description: string;
+}
+
+export const availableCommands: Command[] = [
+    { command: 'whoami', description: 'View the title page' },
+    { command: 'about', description: 'Learn more about me' },
+    { command: 'projects', description: 'View my projects' },
+    { command: 'skills', description: 'See my technical skills' },
+    { command: 'experience', description: 'Check out my work experience' },
+    { command: 'github', description: 'View my Github statistics' },
+    { command: 'podcasts', description: 'View my favorite podcasts' },
+    { command: 'resume', description: 'Download my resume' },
+    { command: 'contact', description: 'Get in touch' },
+    { command: 'help', description: 'Display a list of available commands' },
+];
+
+export const asciiArtTextOptions: string[] = [
+    "Hello World!",
+    "Keep Building",
+    "Make an Impact",
+    "Never Stop Learning",
+    "Always Innovate",
+    "Make Memories"
+];

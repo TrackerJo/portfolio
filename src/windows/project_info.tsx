@@ -3,13 +3,26 @@ import "./project_info.css";
 
 import Terminal from "../components/terminal";
 
-import type { Project } from "../projects_list";
+import type { Project } from "../constants";
+import { useEffect } from "react";
 
 
 
 const ProjectInfoWindow = ({ onClose, project }: { onClose: () => void, project: Project }) => {
 
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [onClose]);
 
     return (
         <div className="sticky-background">

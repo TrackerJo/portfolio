@@ -61,41 +61,10 @@ body:has(.no-scroll) {
     padding: 1.5rem;
 }
 
-.prompt {
-    color: #58a6ff;
-    font-weight: 500;
-    padding-right: 5px;
-}
-
-.command {
-    color: #7ee787;
-    font-weight: 500;
-}
-
-.output {
-    margin: 1rem 0;
-}
 
 
 
-.typing-animation {
-    padding-left: 2px;
-    border-right: 2px solid #7ee787;
 
-}
-
-@keyframes blink {
-
-    0%,
-    50% {
-        border-color: #7ee787;
-    }
-
-    51%,
-    100% {
-        border-color: transparent;
-    }
-}
 
 .section-title {
     color: #f85149;
