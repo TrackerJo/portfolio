@@ -16,6 +16,15 @@ import SnippetsDemo from "./assets/projects/snippets_demo.mp4";
 import ProjectLogDemo from "./assets/projects/project_log_demo.webm";
 import HTMLRefactorDemo from "./assets/projects/html_refactor_demo.webm";
 import UPlateDemo from "./assets/projects/uplate_demo.mp4";
+import PRSMDemo from "./assets/projects/prsm_demo.mov";
+
+import OPS from './assets/ops.png';
+import Recruitabl from './assets/recruitabl.png';
+import Garden from './assets/garden.png';
+import DELMAR from './assets/delmar.png';
+import PRSMAllergy from './assets/projects/PRSM.png';
+
+export const resumeLink = "https://firebasestorage.googleapis.com/v0/b/campusconnect-9.firebasestorage.app/o/public%2FNathaniel_Kemme_Nash_s_Resume.pdf?alt=media";
 
 
 export interface Project {
@@ -59,6 +68,26 @@ export const projects: Project[] = [
         demo: UPlateDemo,
         demoWidth: 720,
         demoHeight: 1556
+    },
+    {
+        title: 'PRSM Allergy',
+        subtitle: 'Non-Profit Allergy Website & Module Builder',
+        status: 'Non-Profit',
+        description: [
+            'A website and module builder for a non-profit organization that helps people with allergies.',
+            'The website acts a hub for people to learn about fundraising events, fundraising campaigns, and other allergy-related information.',
+            'The website also has a custom dashboard for the non-profit organization to manage their fundraising campaigns and events.',
+            'The module builder allows users to create custom modules that can be used to educate others about allergies.'
+        ],
+        technologies: ['React.ts', 'Firebase', 'Cloud Functions'],
+        links: [
+            { label: 'website', href: 'https://prsmallergy.org/' },
+            { label: 'github', href: 'https://github.com/rojeapen/PRSM-Allergy' }
+        ],
+        icon: PRSMAllergy,
+        demo: PRSMDemo,
+        demoWidth: 3164,
+        demoHeight: 2070
     },
     {
         title: 'LayItOut',
@@ -258,4 +287,85 @@ export const asciiArtTextOptions: string[] = [
     "Never Stop Learning",
     "Always Innovate",
     "Make Memories"
+];
+
+export interface Experience {
+    companyPhoto: string;
+    companyName: string;
+    position: string;
+    description: string;
+    website?: string;
+}
+
+export const experiences: Experience[] = [
+    {
+        companyPhoto: OPS,
+        companyName: 'Optimum Performance Sports',
+        position: 'Software Engineer Intern',
+        description: 'Created dynamic digital player profiles for athletes to be displayed on their website.',
+        website: 'https://www.optimumperformancesports.com/'
+    },
+    {
+        companyPhoto: Recruitabl,
+        companyName: 'Recruitabl',
+        position: 'Technical Co-Founder',
+        description: 'Partnered with a former professional basketball player to launch a startup focused on creating digital recruiting profiles for high school, college, and professional athletes.'
+    },
+    {
+        companyPhoto: Garden,
+        companyName: 'The Garden',
+        position: 'Software Developer',
+        description: 'Developed a custom-made shift scheduling application to streamline the employee scheduling process.'
+    },
+    {
+        companyPhoto: DELMAR,
+        companyName: 'DELMAR Software',
+        position: 'Junior Software Developer Intern',
+        description: 'Collaborated with clients to design, containerize, and deploy custom AI and resource optimization systems using C#, Vue, and AWS infrastructure.',
+        website: 'https://www.delmar.software/'
+    }
+];
+
+export interface SocialLink {
+    label: string;
+    href: string;
+}
+
+export const socialLinks: SocialLink[] = [
+    { label: 'github.com/TrackerJo', href: 'https://www.github.com/TrackerJo' },
+
+    { label: 'linkedin.com/in/nathanielkn', href: 'https://www.linkedin.com/in/nathanielkn/' },
+    { label: 'nkemme54@gmail.com', href: 'mailto:nkemme54@gmail.com' },
+]
+
+export const tutorialPages: string[] = [
+    'about',
+    'experience',
+    'projects',
+    'skills',
+    'contact',
+    'resume',
+    'github',
+    'podcasts'
+]
+
+export interface Skill {
+    category: string;
+    items: string[];
+}
+
+
+export const skills: Skill[] = [
+    {
+        category: 'Frontend',
+        items: ['React', 'TypeScript', 'Dart (Flutter)', 'Google Apps Script', 'Google OAuth']
+    },
+    {
+        category: 'Backend',
+        items: ['Firebase', 'Google Cloud APIs', 'MySQL', 'Python', 'HTTP APIs']
+    },
+    {
+        category: 'DevOps & Tools',
+        items: ['Git / Github', 'Google Analytics', 'App Store / Play Store Release Management', 'Firebase Hosting']
+    }
 ];

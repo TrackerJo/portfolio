@@ -182,6 +182,7 @@
 .command {
     color: #7ee787;
     font-weight: 500;
+    white-space: pre;
 }
 
 .output {
